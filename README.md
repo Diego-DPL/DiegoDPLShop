@@ -483,7 +483,8 @@ Este proyecto está bajo la licencia **MIT License**. Consulta [LICENSE](./LICEN
 **DiegoDPL** – Productor y desarrollador –  
 - GitHub: [@Diego-DPL](https://github.com/Diego-DPL)  
 - Instagram: [@DiegoDPL](https://instagram.com/DiegoDPL)  
-- Correo: diego@example.com  (reemplaza por el tuyo real)
+- Correo: info@diegodpl.com
+
 
 ---
 
