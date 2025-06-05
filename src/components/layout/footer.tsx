@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
     return (
@@ -51,7 +52,7 @@ const Footer: React.FC = () => {
                         <div className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Inicio</div>
                         <div className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Sobre mí</div>
                         <div className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Bundles</div>
-                        <div className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Contacto</div>
+                        <Link to="/contact" className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Contacto</Link>
                         <div className="w-full text-gray-300/60 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Términos</div>
                     </div>
                     <div className="w-full sm:w-48 flex flex-col justify-center items-start gap-2">
