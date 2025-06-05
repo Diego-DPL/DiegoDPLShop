@@ -1,13 +1,12 @@
 import React from 'react';
 import diegoDPLDJ from '../assets/images/DiegoDPL_DJ_Pinchando.png';
 import discoplatino from '../assets/images/Disco_platino_historia.webp';
-
 const Home: React.FC = () => {
     return (
-
         <>
             {/* Hero section */}
-            <div className="home-container bg-bg-primary w-full min-h-screen pt-16 md:pt-24 lg:pt-40">
+            <div className="home-container bg-gray-950 w-full min-h-screen pt-16 md:pt-24 lg:pt-40 relative overflow-hidden sticky top-0 -z-10">
+                <div className="absolute inset-0 bg-gradient-to-r from-lime-500/20 via-gray-900/70 to-gray-950"></div>
                 <div className="relative px-4 md:px-8">
                     <div className="absolute inset-0 flex justify-center z-0 -mt-10 md:-mt-20 lg:mt-30">
                         <div className="text-center text-gray-300 text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold font-plus-jakarta">DiegoDPL</div>
