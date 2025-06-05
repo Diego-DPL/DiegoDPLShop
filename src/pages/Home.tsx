@@ -9,10 +9,10 @@ const Home: React.FC = () => {
             {/* Hero section */}
             <div className="home-container bg-bg-primary w-full min-h-screen pt-16 md:pt-24 lg:pt-40">
                 <div className="relative px-4 md:px-8">
-                    <div className="absolute inset-0 flex justify-center z-0 -mt-10 md:-mt-20 lg:mt-30">
+                    <div className="absolute inset-0 flex justify-center z-0 -mt-10 md:-mt-20 lg:mt-32">
                         <div className="text-center text-gray-300 text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold font-plus-jakarta">DiegoDPL</div>
                     </div>
-                    <div className="relative z-10 mx-auto flex justify-center lg:justify-end lg:-pr-30 xl:pr-40 mt-40 lg:-mt-20">
+                    <div className="relative z-10 mx-auto flex justify-center lg:justify-end lg:pr-32 xl:pr-40 mt-40 lg:-mt-20">
                         <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl">
                             <img 
                                 src={diegoDPLDJ} 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
                 </div>
                 <div className="flex justify-center items-center md:flex-1">
                     <img 
-                        className="object-contain max-w-full h-150 border-[1.50px] border-gray-300/20" 
+                        className="object-contain max-w-full h-150 border-[1.50px] border-gray-300/20"
                         src={discoplatino} 
                         alt="Disco de platino" 
                     />
