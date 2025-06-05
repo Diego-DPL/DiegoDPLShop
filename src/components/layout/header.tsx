@@ -43,14 +43,14 @@ const Header: React.FC = () => {
                             </svg>
                         </div>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <Link to="/contact" className="flex items-center gap-1">
                         <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Contacto</div>
                         <div className="w-4 h-4 relative overflow-hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300 w-full h-full">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </div>
-                    </div>
+                    </Link>
                     <div className="flex items-center gap-1">
                         <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Carrito</div>
                         <div className="w-4 h-4 relative overflow-hidden">
