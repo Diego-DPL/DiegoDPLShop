@@ -1,0 +1,5 @@
+/* Global tweaks */
+.font-plus-jakarta { font-family: var(--font-plus-jakarta); }
+.bg-gradient-radial {
+	background: radial-gradient(200px 200px at 50% 0%, rgba(132, 204, 22, 0.15), transparent 60%);
+}
