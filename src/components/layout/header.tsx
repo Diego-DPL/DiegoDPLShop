@@ -96,6 +96,20 @@ const Header: React.FC = () => {
                                         Cuenta
                                     </span>
                                 </Link>
+                                <Link 
+                                    to="/orders" 
+                                    className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-white/5 transition-all duration-300 group"
+                                >
+                                    <div className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                                        </svg>
+                                    </div>
+                                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                                        Mis Compras
+                                    </span>
+                                </Link>
                                 {isAdmin && (
                                     <Link 
                                         to="/admin" 
@@ -180,6 +194,19 @@ const Header: React.FC = () => {
                                             </svg>
                                         </div>
                                         <span>Mi Cuenta</span>
+                                    </Link>
+                                    <Link
+                                        to="/orders"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300"
+                                    >
+                                        <div className="w-5 h-5">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                                            </svg>
+                                        </div>
+                                        <span>Mis Compras</span>
                                     </Link>
                                     {isAdmin && (
                                         <Link

@@ -82,8 +82,14 @@ const Admin: React.FC = () => {
       </div>
 
       <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-        <h2 className="text-gray-100 text-xl font-semibold mb-4">Órdenes</h2>
-        <p className="text-gray-400 text-sm">(Placeholder) Listado/gestión de órdenes. Añadiremos filtrado y estados cuando integremos checkout real.</p>
+        <div className="flex items-center gap-3 mb-4">
+          <h2 className="text-gray-100 text-xl font-semibold">Órdenes y Ventas</h2>
+          <a href="/admin/orders" className="px-3 py-1.5 bg-gray-800 text-gray-100 rounded-md border border-white/10 hover:bg-gray-700">Ver Órdenes</a>
+        </div>
+        <p className="text-gray-400 text-sm">
+          Gestiona las órdenes de compra, estadísticas de ventas y productos más vendidos desde el 
+          <a className="text-lime-300 underline ml-1" href="/admin/orders">Panel de Órdenes</a>.
+        </p>
       </div>
     </div>
   );

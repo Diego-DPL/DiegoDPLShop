@@ -36,7 +36,8 @@ const Register: React.FC = () => {
     try {
       const user = await register(email, password);
       try { await updateProfile(user, { displayName }); } catch {}
-      // Intentar guardar el perfil; si las reglas lo impiden, continuamos igualmente
+      
+      // Crear el perfil de usuario en Firestore
       try {
         await createUserProfile({
           uid: user.uid,
@@ -48,9 +49,13 @@ const Register: React.FC = () => {
           address: { line1, line2, city, state, postal_code: postalCode, country },
           role: 'user',
         });
-      } catch (_e) {
-        // Permisos insuficientes o Firestore no accesible: lo podremos crear después
+        console.log('✅ Perfil de usuario creado exitosamente en Firestore');
+      } catch (profileError: any) {
+        console.error('❌ Error al crear perfil de usuario:', profileError);
+        // Mostrar un mensaje más específico pero continuar con el registro
+        setNotice('Cuenta creada exitosamente, pero hubo un problema al guardar algunos datos. Tu cuenta funcionará normalmente.');
       }
+      
       setNotice('Cuenta creada. Revisa tu correo y verifica tu email para poder iniciar sesión.');
       navigate('/verify-email', { replace: true });
     } catch (err: any) {

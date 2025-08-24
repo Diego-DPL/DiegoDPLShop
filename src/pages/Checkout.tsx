@@ -4,6 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { formatCents } from '../utils/format';
 import { sendDownloadEmail } from '../utils/email';
 import { Link, useNavigate } from 'react-router-dom';
+import { generateOrderNumber, cartItemToOrderItem, type Order } from '../utils/orders';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 const Checkout: React.FC = () => {
   const { items, totalPriceCents, clear } = useCart();
@@ -41,10 +44,40 @@ const Checkout: React.FC = () => {
     }
   }
 
+  // Función para crear orden en Firestore
+  async function createOrder(orderNumber: string, status: 'completed' | 'pending' = 'completed'): Promise<void> {
+    if (!user) return;
+
+    const order: Order = {
+      id: orderNumber,
+      orderNumber,
+      userId: user.uid,
+      userEmail: user.email!,
+      userName: user.displayName || user.email!.split('@')[0],
+      items: items.map(cartItemToOrderItem),
+      totalAmount: totalPriceCents,
+      status,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      completedAt: status === 'completed' ? serverTimestamp() : undefined,
+    };
+
+    try {
+      await setDoc(doc(db, 'orders', orderNumber), order);
+      console.log('✅ Orden creada exitosamente:', orderNumber);
+    } catch (error) {
+      console.error('❌ Error al crear orden:', error);
+      // No bloqueamos el proceso si falla la creación de la orden
+    }
+  }
+
   async function handleFreeProducts() {
     try {
       // Generar número de pedido único
-      const orderNumber = 'FREE-' + Date.now().toString(36).toUpperCase();
+      const orderNumber = generateOrderNumber();
+      
+      // Crear orden en Firestore
+      await createOrder(orderNumber, 'completed');
       
       // Enviar email con enlaces de descarga
       const emailSuccess = await sendDownloadEmail(
@@ -73,12 +106,23 @@ const Checkout: React.FC = () => {
   async function handlePaidProducts() {
     try {
       // Generar número de pedido para productos de pago
-      const orderNumber = 'PAID-' + Date.now().toString(36).toUpperCase();
+      const orderNumber = generateOrderNumber();
+      
+      // Crear orden en estado pending
+      await createOrder(orderNumber, 'pending');
       
       // TODO: Integración con Stripe
       
-      // Por ahora, simular éxito y enviar email
+      // Por ahora, simular éxito y actualizar orden a completada
       alert('Procesamiento de pago no implementado aún. Simulando éxito...');
+      
+      // Actualizar orden como completada
+      await setDoc(doc(db, 'orders', orderNumber), {
+        status: 'completed',
+        updatedAt: serverTimestamp(),
+        completedAt: serverTimestamp(),
+        paymentMethod: 'simulado'
+      }, { merge: true });
       
       const emailSuccess = await sendDownloadEmail(
         user!.email!,
@@ -92,6 +136,7 @@ const Checkout: React.FC = () => {
         navigate('/success?type=paid&orderNumber=' + orderNumber);
       }
     } catch (error) {
+      console.error('Error al procesar el pago:', error);
       alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
     }
   }

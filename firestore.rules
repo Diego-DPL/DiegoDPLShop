@@ -23,8 +23,9 @@ service cloud.firestore {
       // Lectura: el usuario puede leer su propio documento O ser admin
       allow read: if isOwner(userId) || isAdmin();
       
-      // Creación: solo durante el registro (el usuario puede crear su propio documento)
-      allow create: if isOwner(userId) && request.auth.token.email_verified == true;
+      // Creación: durante el registro (el usuario puede crear su propio documento)
+      // No requerimos email verificado durante la creación inicial
+      allow create: if isOwner(userId);
       
       // Actualización: el usuario puede actualizar su propio documento (excepto role) O ser admin
       allow update: if isOwner(userId) && !('role' in request.resource.data.diff(resource.data).affectedKeys()) 
@@ -48,7 +49,7 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Reglas para la colección orders (para futuro)
+    // Reglas para la colección orders
     match /orders/{orderId} {
       // Lectura: el propietario de la orden O admin
       allow read: if isAuthenticated() && 
@@ -56,10 +57,29 @@ service cloud.firestore {
       
       // Creación: solo usuarios autenticados pueden crear órdenes para sí mismos
       allow create: if isAuthenticated() && 
-                       request.resource.data.userId == request.auth.uid;
+                       request.resource.data.userId == request.auth.uid &&
+                       request.resource.data.userEmail == request.auth.token.email;
       
-      // Actualización/borrado: solo admins
-      allow update, delete: if isAdmin();
+      // Actualización: usuarios pueden actualizar algunas cosas, admins todo
+      allow update: if isAuthenticated() && 
+                       ((resource.data.userId == request.auth.uid && 
+                         !('status' in request.resource.data.diff(resource.data).affectedKeys()) &&
+                         !('totalAmount' in request.resource.data.diff(resource.data).affectedKeys()) &&
+                         !('items' in request.resource.data.diff(resource.data).affectedKeys())) ||
+                        isAdmin());
+      
+      // Borrado: solo admins
+      allow delete: if isAdmin();
+    }
+
+    // Permitir a los admins listar todas las órdenes
+    match /orders/{document=**} {
+      allow list: if isAdmin();
+    }
+
+    // Permitir a los usuarios listar solo sus órdenes
+    match /orders/{orderId} {
+      allow list: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
     // Denegar todo lo demás por defecto

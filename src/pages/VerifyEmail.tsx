@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../lib/firebase';
+import { createUserProfile } from '../utils/user';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 const VerifyEmail: React.FC = () => {
   const { user, resendVerification } = useAuth();
@@ -25,12 +28,35 @@ const VerifyEmail: React.FC = () => {
           await auth.currentUser.reload();
           if (auth.currentUser.emailVerified) {
             setVerified(true);
+            // Intentar crear el perfil si no existe
+            await ensureUserProfile();
           }
         }
       } catch {}
     }, 4000);
     return () => clearInterval(id);
   }, [verified]);
+
+  // Función para asegurar que el perfil de usuario existe
+  async function ensureUserProfile() {
+    if (!auth.currentUser) return;
+    
+    try {
+      const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+      if (!userDoc.exists()) {
+        // El perfil no existe, intentar crearlo con datos básicos
+        await createUserProfile({
+          uid: auth.currentUser.uid,
+          email: auth.currentUser.email || '',
+          displayName: auth.currentUser.displayName || 'Usuario',
+          role: 'user',
+        });
+        console.log('✅ Perfil de usuario creado después de verificación de email');
+      }
+    } catch (error) {
+      console.error('❌ Error al verificar/crear perfil de usuario:', error);
+    }
+  }
 
   // Redirección con cuenta atrás cuando queda verificado
   useEffect(() => {
@@ -47,7 +73,11 @@ const VerifyEmail: React.FC = () => {
     setChecking(true);
     try {
       await auth.currentUser.reload();
-      if (auth.currentUser.emailVerified) setVerified(true);
+      if (auth.currentUser.emailVerified) {
+        setVerified(true);
+        // Intentar crear el perfil si no existe
+        await ensureUserProfile();
+      }
     } finally {
       setChecking(false);
     }

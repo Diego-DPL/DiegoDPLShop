@@ -123,25 +123,14 @@ export function createDownloadEmailHTML(
           <!-- Products List -->
           <div style="background-color: #2a2a2a; border-radius: 8px; padding: 20px; margin: 20px 0;">
             ${digitalItems.map(item => `
-              <div style="border-bottom: 1px solid #444; padding: 15px 0; margin-bottom: 15px; last-child: border-bottom: none;">
+              <div style="border-bottom: 1px solid #444; padding: 15px 0; margin-bottom: 15px;">
                 <h3 style="color: #84cc16; margin: 0 0 10px 0; font-size: 18px;">
                   🎵 ${item.name}
                 </h3>
                 <p style="color: #999; margin: 0 0 15px 0; font-size: 14px;">
                   Cantidad: ${item.quantity} | ${item.price === 0 ? 'GRATIS' : `$${(item.price / 100).toFixed(2)}`}
                 </p>
-                ${item.downloadUrl ? `
-                  <a href="${item.downloadUrl}" 
-                     style="display: inline-block; background: linear-gradient(135deg, #84cc16, #a3e635); 
-                            color: #000; text-decoration: none; padding: 12px 24px; border-radius: 6px; 
-                            font-weight: bold; font-size: 14px; margin-top: 10px;">
-                    ⬇️ Descargar Ahora
-                  </a>
-                ` : `
-                  <p style="color: #ff6b6b; font-size: 14px; margin: 10px 0;">
-                    ⚠️ Enlace de descarga no disponible
-                  </p>
-                `}
+                ${generateDownloadButton(item)}
               </div>
             `).join('')}
           </div>
@@ -151,17 +140,32 @@ export function createDownloadEmailHTML(
             <h4 style="color: #84cc16; margin: 0 0 10px 0; font-size: 16px;">📋 Información Importante:</h4>
             <ul style="color: #cccccc; margin: 0; padding-left: 20px; line-height: 1.6;">
               <li>Los enlaces de descarga estarán disponibles por 30 días</li>
-              <li>Puedes descargar cada archivo hasta 3 veces</li>
+              <li>Puedes descargar cada archivo hasta 5 veces</li>
+              <li>Los archivos incluyen: samples, loops y contenido adicional</li>
               <li>Si tienes problemas, contacta nuestro soporte</li>
               <li>Mantén este email para futuras referencias</li>
             </ul>
           </div>
 
+          <!-- Support Section -->
+          <div style="background-color: #2a2a2a; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center;">
+            <h4 style="color: #84cc16; margin: 0 0 10px 0; font-size: 16px;">� ¿Necesitas ayuda?</h4>
+            <p style="color: #cccccc; margin: 0 0 15px 0; font-size: 14px;">
+              Si tienes algún problema con las descargas o necesitas soporte:
+            </p>
+            <a href="mailto:info@diegodpl.com" 
+               style="display: inline-block; background: linear-gradient(135deg, #84cc16, #a3e635); 
+                      color: #000; text-decoration: none; padding: 12px 24px; border-radius: 6px; 
+                      font-weight: bold; font-size: 14px;">
+              📧 Contactar Soporte
+            </a>
+          </div>
+
           <!-- Footer -->
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #333;">
             <p style="color: #888; font-size: 14px; margin: 0 0 10px 0;">
-              ¿Necesitas ayuda? Contáctanos en: 
-              <a href="mailto:support@diegodpl.com" style="color: #84cc16;">support@diegodpl.com</a>
+              ¿Quieres más contenido premium? 
+              <a href="https://diegodpl.com/catalog" style="color: #84cc16;">Explora nuestro catálogo</a>
             </p>
             <p style="color: #666; font-size: 12px; margin: 0;">
               © 2025 DiegoDPL Shop. Todos los derechos reservados.
@@ -172,6 +176,93 @@ export function createDownloadEmailHTML(
     </body>
     </html>
   `;
+}
+
+// Funciones auxiliares para validar URLs
+function isPreviewFile(url: string): boolean {
+  if (!url) return false;
+  
+  // Solo rechazar URLs que claramente sean archivos de preview
+  // No rechazar .mp3 en general porque podría ser un enlace de descarga válido
+  const previewIndicators = [
+    '/preview/',
+    '/previews/',
+    '_preview',
+    '-preview',
+    'preview.',
+    '/audio-previews/',
+    'sample.',
+    '/samples/',
+    'demo.',
+    '/demos/'
+  ];
+
+  return previewIndicators.some(indicator => 
+    url.toLowerCase().includes(indicator.toLowerCase())
+  );
+}
+
+function cleanProductUrls(downloadUrl: string | undefined): string | null {
+  if (!downloadUrl) {
+    console.warn('No downloadUrl provided for product');
+    return null;
+  }
+  
+  // Si es un archivo de preview, retornar null para que se maneje como "no disponible"
+  if (isPreviewFile(downloadUrl)) {
+    console.warn(`Preview URL detected and removed: ${downloadUrl}`);
+    return null;
+  }
+  
+  console.log(`Valid download URL accepted: ${downloadUrl}`);
+  return downloadUrl;
+}
+
+// Función auxiliar para generar botones de descarga seguros
+function generateDownloadButton(item: CartItem): string {
+  // Limpiar y validar el downloadUrl
+  const cleanUrl = cleanProductUrls(item.downloadUrl);
+  
+  if (!cleanUrl) {
+    return `
+      <div style="background-color: #3a3a3a; border-radius: 6px; padding: 15px; margin: 10px 0;">
+        <p style="color: #ffa500; font-size: 14px; margin: 0 0 10px 0;">
+          📦 Producto en preparación
+        </p>
+        <p style="color: #cccccc; font-size: 12px; margin: 0;">
+          Tu enlace de descarga completo se enviará en las próximas 24 horas.<br/>
+          ${item.downloadUrl ? 'Se detectó un enlace de preview.' : 'No se proporcionó enlace de descarga.'}
+        </p>
+      </div>
+    `;
+  }
+
+  // Si el URL es válido, usarlo directamente (no generar uno temporal)
+  // Los enlaces que introduces manualmente ya son seguros
+  return `
+    <a href="${cleanUrl}" 
+       style="display: inline-block; background: linear-gradient(135deg, #84cc16, #a3e635); 
+              color: #000; text-decoration: none; padding: 12px 24px; border-radius: 6px; 
+              font-weight: bold; font-size: 14px; margin-top: 10px;">
+      ⬇️ Descargar Producto Completo
+    </a>
+    <p style="color: #888; font-size: 12px; margin: 5px 0 0 0;">
+      Enlace directo al archivo completo
+    </p>
+  `;
+}
+
+// Función auxiliar para quitar HTML del texto
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim();
 }
 
 // Función para crear el texto plano del email
@@ -189,20 +280,32 @@ Hola ${customerName},
 
 ¡Gracias por tu compra! Tu pedido #${orderNumber} ha sido procesado exitosamente.
 
-Productos digitales adquiridos:
-${digitalItems.map(item => `
-• ${item.name}
-  Cantidad: ${item.quantity} | ${item.price === 0 ? 'GRATIS' : `$${(item.price / 100).toFixed(2)}`}
-  ${item.downloadUrl ? `Enlace: ${item.downloadUrl}` : 'Enlace no disponible'}
-`).join('')}
+PRODUCTOS DIGITALES:
+${digitalItems.map(item => {
+  const cleanUrl = cleanProductUrls(item.downloadUrl);
+  const downloadLink = cleanUrl || 'Enlace en preparación - se enviará en 24 horas';
+    
+  return `
+🎵 ${item.name}
+Cantidad: ${item.quantity} | ${item.price === 0 ? 'GRATIS' : `$${(item.price / 100).toFixed(2)}`}
+Descarga: ${downloadLink}
+${!cleanUrl ? `(${item.downloadUrl ? 'Se detectó enlace de preview' : 'No se proporcionó enlace'})` : ''}
+---
+`;
+}).join('')}
 
 INFORMACIÓN IMPORTANTE:
 - Los enlaces de descarga estarán disponibles por 30 días
-- Puedes descargar cada archivo hasta 3 veces
+- Puedes descargar cada archivo hasta 5 veces  
+- Los archivos incluyen: samples, loops y contenido adicional
 - Si tienes problemas, contacta nuestro soporte
 - Mantén este email para futuras referencias
 
-¿Necesitas ayuda? Contáctanos en: support@diegodpl.com
+¿Necesitas ayuda? 
+📧 Contáctanos en: info@diegodpl.com
+
+¿Quieres más contenido premium?
+🎵 Explora nuestro catálogo: https://diegodpl.com/catalog
 
 © 2025 DiegoDPL Shop. Todos los derechos reservados.
   `.trim();
@@ -229,17 +332,4 @@ export async function sendDownloadEmail(
   };
 
   return await sendEmail(emailData);
-}
-
-// Función auxiliar para quitar HTML del texto
-function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .trim();
 }
