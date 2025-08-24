@@ -309,7 +309,7 @@ const Home: React.FC = () => {
                             href="/catalog" 
                             className="group inline-flex items-center gap-4 bg-gradient-to-r from-lime-300/10 to-green-400/10 backdrop-blur-sm border border-lime-300/30 rounded-2xl px-8 py-4 hover:border-lime-300/50 hover:bg-lime-300/5 transition-all duration-300"
                         >
-                            <span className="text-white font-semibold text-lg">Ver Catálogo Completo</span>
+                            <span className="text-white font-semibold text-lg">Ver Catálogo Completo </span>
                             <span className="text-lime-300 group-hover:translate-x-2 transition-transform text-xl">→</span>
                         </a>
                     </div>
