@@ -1,0 +1,80 @@
+rules_version = '2';
+
+// Craft rules    // Reglas para la carpeta products/ - solo admins pueden subir/modificar
+    match /products/{productId}/{anyFile} {
+      // Lectura: cualquier usuario puede ver los archivos de productos
+      allow read: if true;
+      
+      // Escritura: solo administradores autenticados (imágenes y audio)
+      allow write: if isAdmin() && isAuthenticated() && (isImage() || isAudio()) && isValidSize();
+      
+      // Borrado: solo administradores
+      allow delete: if isAdmin();
+    }ata in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Función para verificar si el usuario está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Función para verificar si el usuario es administrador
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Función para verificar archivos de imagen
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    // Función para verificar archivos de audio (MP3)
+    function isAudio() {
+      return request.resource.contentType.matches('audio/.*') || 
+             request.resource.contentType == 'audio/mpeg' ||
+             request.resource.contentType == 'audio/mp3';
+    }
+    
+    // Función para verificar tamaño del archivo (máximo 10MB para imágenes, 50MB para audio)
+    function isValidSize() {
+      return (isImage() && request.resource.size < 10 * 1024 * 1024) ||
+             (isAudio() && request.resource.size < 50 * 1024 * 1024) ||
+             (!isImage() && !isAudio() && request.resource.size < 10 * 1024 * 1024);
+    }
+
+    // Reglas para la carpeta products/ - solo admins pueden subir/modificar
+    match /products/{productId}/{imageFile} {
+      // Lectura: cualquier usuario puede ver las imágenes de productos
+      allow read: if true;
+      
+      // Escritura: solo administradores autenticados (imágenes y audio)
+      allow write: if isAdmin() && isAuthenticated() && (isImage() || isAudio()) && isValidSize();
+      
+      // Borrado: solo administradores
+      allow delete: if isAdmin();
+    }
+    
+    // Reglas para avatares de usuario (para futuro)
+    match /users/{userId}/avatar/{imageFile} {
+      // Lectura: usuarios autenticados
+      allow read: if isAuthenticated();
+      
+      // Escritura: solo el propio usuario o admin
+      allow write: if isAuthenticated() && 
+                      (request.auth.uid == userId || isAdmin()) && 
+                      isImage() && isValidSize();
+      
+      // Borrado: solo el propio usuario o admin
+      allow delete: if isAuthenticated() && 
+                       (request.auth.uid == userId || isAdmin());
+    }
+    
+    // Denegar todo lo demás por defecto
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

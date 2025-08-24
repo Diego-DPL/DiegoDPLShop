@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Función para verificar si el usuario es administrador
+    function isAdmin() {
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Función para verificar si el usuario está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Función para verificar si es el propio usuario
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Reglas para la colección users
+    match /users/{userId} {
+      // Lectura: el usuario puede leer su propio documento O ser admin
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Creación: solo durante el registro (el usuario puede crear su propio documento)
+      allow create: if isOwner(userId) && request.auth.token.email_verified == true;
+      
+      // Actualización: el usuario puede actualizar su propio documento (excepto role) O ser admin
+      allow update: if isOwner(userId) && !('role' in request.resource.data.diff(resource.data).affectedKeys()) 
+                    || isAdmin();
+      
+      // Borrado: solo admins
+      allow delete: if isAdmin();
+    }
+
+    // Permitir a los admins listar todos los usuarios
+    match /users/{document=**} {
+      allow list: if isAdmin();
+    }
+
+    // Reglas para la colección products
+    match /products/{productId} {
+      // Lectura: cualquier usuario autenticado puede leer productos
+      allow read: if true;
+      
+      // Escritura: solo admins
+      allow write: if isAdmin();
+    }
+
+    // Reglas para la colección orders (para futuro)
+    match /orders/{orderId} {
+      // Lectura: el propietario de la orden O admin
+      allow read: if isAuthenticated() && 
+                     (resource.data.userId == request.auth.uid || isAdmin());
+      
+      // Creación: solo usuarios autenticados pueden crear órdenes para sí mismos
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      
+      // Actualización/borrado: solo admins
+      allow update, delete: if isAdmin();
+    }
+
+    // Denegar todo lo demás por defecto
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+rules_version = '2';
+
+// REGLAS TEMPORALES PARA DESARROLLO - Más permisivas para debugging
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Función para verificar si el usuario está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Función para verificar si el usuario es administrador
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Reglas para la carpeta products/ - MÁS PERMISIVAS PARA DESARROLLO
+    match /products/{productId}/{anyFile} {
+      // Lectura: cualquier usuario puede ver los archivos de productos
+      allow read: if true;
+      
+      // Escritura: solo usuarios autenticados que sean admin
+      // SIN restricciones de tipo de archivo para debugging
+      allow write: if isAuthenticated() && isAdmin();
+      
+      // Borrado: solo administradores
+      allow delete: if isAuthenticated() && isAdmin();
+    }
+    
+    // Reglas para avatares de usuario (para futuro)
+    match /users/{userId}/avatar/{imageFile} {
+      // Lectura: usuarios autenticados
+      allow read: if isAuthenticated();
+      
+      // Escritura: solo el propio usuario o admin
+      allow write: if isAuthenticated() && 
+                      (request.auth.uid == userId || isAdmin());
+      
+      // Borrado: solo el propio usuario o admin
+      allow delete: if isAuthenticated() && 
+                       (request.auth.uid == userId || isAdmin());
+    }
+    
+    // Denegar todo lo demás por defecto
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
