@@ -1,109 +1,227 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 
 const Header: React.FC = () => {
     const { totalItems, recentlyAdded } = useCart();
     const { user, logout, isAdmin } = useAuth();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const location = useLocation();
+
+    const navLinks = [
+        { to: '/', label: 'Inicio' },
+        { to: '/about-me', label: 'Sobre mí' },
+        { to: '/catalog', label: 'Catálogo' },
+        { to: '/contact', label: 'Contacto' }
+    ];
+
+    const isActive = (path: string) => location.pathname === path;
+
     return (
         <>
-        <header className="w-full py-4 bg-gray-950 flex flex-col">
-            <div className="container mx-auto px-4 flex justify-between items-center">
-                {/* Logo section */}
-                <Link to="/" className="flex items-center gap-2">
-                    <div className="w-8 h-8 relative overflow-hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-lime-300 w-full h-full">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </div>
-                    <div className="text-lime-300 text-3xl font-bold font-['Plus_Jakarta_Sans'] leading-7">DiegoDPL</div>
-                </Link>
+        <header className="sticky top-0 z-50 w-full bg-gray-950/95 backdrop-blur-sm border-b border-white/10">
+            <div className="container mx-auto px-4 lg:px-6">
+                <div className="flex items-center justify-between h-16">
+                    {/* Logo - Simple and Clean */}
+                    <Link 
+                        to="/" 
+                        className="flex items-center group transition-all duration-300 hover:scale-105"
+                    >
+                        <div className="relative">
+                            <span className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-lime-300 to-emerald-400 bg-clip-text text-transparent font-['Plus_Jakarta_Sans']">
+                                DiegoDPL
+                            </span>
+                            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-lime-300 to-emerald-400 group-hover:w-full transition-all duration-300"></div>
+                        </div>
+                    </Link>
 
-                {/* Navigation links */}
-                <nav className="hidden md:flex items-center gap-8">
-                    <Link to="/" className="flex items-center gap-1">
-                        <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Inicio</div>
-                        <div className="w-4 h-4 relative overflow-hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300 w-full h-full">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link to="/about-me" className="flex items-center gap-1">
-                        <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Sobre mí</div>
-                        <div className="w-4 h-4 relative overflow-hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300 w-full h-full">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link to="/catalog" className="flex items-center gap-1">
-                        <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Catálogo</div>
-                        <div className="w-4 h-4 relative overflow-hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300 w-full h-full">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link to="/contact" className="flex items-center gap-1">
-                        <div className="text-gray-300 text-base font-semibold font-['Plus_Jakarta_Sans'] leading-tight">Contacto</div>
-                        <div className="w-4 h-4 relative overflow-hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300 w-full h-full">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link to="/cart" className="flex items-center gap-2 relative">
-                        <div className={`w-6 h-6 relative overflow-hidden transition-all duration-300 ${
-                            recentlyAdded ? 'scale-125 animate-pulse' : ''
-                        }`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                <path d="M3.82349 6.30392L6.82349 2.30392H18.8235L21.8235 6.30392M3.82349 6.30392V20.3039C3.82349 20.8344 4.0342 21.3431 4.40927 21.7181C4.78435 22.0932 5.29305 22.3039 5.82349 22.3039H19.8235C20.3539 22.3039 20.8626 22.0932 21.2377 21.7181C21.6128 21.3431 21.8235 20.8344 21.8235 20.3039V6.30392M3.82349 6.30392H21.8235M16.8235 10.3039C16.8235 11.3648 16.4021 12.3822 15.6519 13.1324C14.9018 13.8825 13.8844 14.3039 12.8235 14.3039C11.7626 14.3039 10.7452 13.8825 9.99506 13.1324C9.24491 12.3822 8.82349 11.3648 8.82349 10.3039" stroke="#D6DDE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                        </div>
-                        <span className={`text-gray-300 text-sm transition-all duration-300 ${
-                            recentlyAdded ? 'text-lime-300 font-bold scale-110' : ''
-                        }`}>
-                            {totalItems}
-                        </span>
-                        {recentlyAdded && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-lime-400 rounded-full animate-ping"></div>
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex items-center space-x-8">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.to}
+                                to={link.to}
+                                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 group ${
+                                    isActive(link.to)
+                                        ? 'text-lime-300'
+                                        : 'text-gray-300 hover:text-white'
+                                }`}
+                            >
+                                {link.label}
+                                <div className={`absolute bottom-0 left-0 h-0.5 bg-lime-300 transition-all duration-300 ${
+                                    isActive(link.to) ? 'w-full' : 'w-0 group-hover:w-full'
+                                }`}></div>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* Right Section */}
+                    <div className="flex items-center space-x-4">
+                        {/* Cart Button */}
+                        <Link 
+                            to="/cart" 
+                            className="relative p-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 group"
+                        >
+                            <div className={`w-5 h-5 transition-all duration-300 ${
+                                recentlyAdded ? 'scale-125 animate-bounce' : ''
+                            }`}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 3H3M7 13v7a1 1 0 001 1h8a1 1 0 001-1v-7M12 16h.01"/>
+                                </svg>
+                            </div>
+                            {totalItems > 0 && (
+                                <span className={`absolute -top-1 -right-1 bg-gradient-to-r from-lime-400 to-emerald-500 text-gray-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transition-all duration-300 ${
+                                    recentlyAdded ? 'animate-pulse scale-110' : ''
+                                }`}>
+                                    {totalItems}
+                                </span>
+                            )}
+                        </Link>
+
+                        {/* User Section */}
+                        {user ? (
+                            <div className="hidden md:flex items-center space-x-3">
+                                <Link 
+                                    to="/account" 
+                                    className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-white/5 transition-all duration-300 group"
+                                >
+                                    <div className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                            <circle cx="12" cy="7" r="4"/>
+                                        </svg>
+                                    </div>
+                                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                                        Cuenta
+                                    </span>
+                                </Link>
+                                {isAdmin && (
+                                    <Link 
+                                        to="/admin" 
+                                        className="px-3 py-1.5 text-xs font-medium text-gray-900 bg-lime-300 hover:bg-lime-400 rounded-md transition-all duration-300 hover:scale-105"
+                                    >
+                                        Admin
+                                    </Link>
+                                )}
+                                <button 
+                                    onClick={logout}
+                                    className="px-3 py-1.5 text-xs font-medium text-gray-300 bg-gray-800/50 hover:bg-gray-700 border border-gray-600 hover:border-gray-500 rounded-md transition-all duration-300"
+                                >
+                                    Salir
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="hidden md:flex items-center space-x-3">
+                                <Link 
+                                    to="/login" 
+                                    className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                                >
+                                    Iniciar Sesión
+                                </Link>
+                                <Link 
+                                    to="/register" 
+                                    className="px-4 py-2 text-sm font-medium text-gray-900 bg-gradient-to-r from-lime-300 to-emerald-400 hover:from-lime-400 hover:to-emerald-500 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                                >
+                                    Registrarse
+                                </Link>
+                            </div>
                         )}
-                    </Link>
-                </nav>
 
-                {/* Icons on the right */}
-                <div className="flex items-center gap-6">
-                    <div className="w-6 h-6 relative overflow-hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                            <path d="M21.8239 21.3039L17.4739 16.9539M19.8235 11.3039C19.8235 15.7222 16.2418 19.3039 11.8235 19.3039C7.40521 19.3039 3.82349 15.7222 3.82349 11.3039C3.82349 6.88565 7.40521 3.30392 11.8235 3.30392C16.2418 3.30392 19.8235 6.88565 19.8235 11.3039Z" stroke="#D6DDE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                        {/* Mobile Menu Button */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="md:hidden p-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300"
+                            aria-label="Toggle mobile menu"
+                        >
+                            <div className="w-6 h-6">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                    {isMobileMenuOpen ? (
+                                        <path d="M6 18L18 6M6 6l12 12"/>
+                                    ) : (
+                                        <path d="M3 12h18M3 6h18M3 18h18"/>
+                                    )}
+                                </svg>
+                            </div>
+                        </button>
                     </div>
-                    <div className="w-6 h-6 relative overflow-hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                            <path d="M20.8235 21.3039V19.3039C20.8235 18.2431 20.4021 17.2256 19.6519 16.4755C18.9018 15.7254 17.8844 15.3039 16.8235 15.3039H8.82349C7.76262 15.3039 6.7452 15.7254 5.99506 16.4755C5.24491 17.2256 4.82349 18.2431 4.82349 19.3039V21.3039M16.8235 7.30392C16.8235 9.51306 15.0326 11.3039 12.8235 11.3039C10.6143 11.3039 8.82349 9.51306 8.82349 7.30392C8.82349 5.09479 10.6143 3.30392 12.8235 3.30392C15.0326 3.30392 16.8235 5.09479 16.8235 7.30392Z" stroke="#D6DDE6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </div>
-                                        {user ? (
-                                                <>
-                                                    <span className="hidden md:inline text-gray-300/80 text-sm">{user.email}</span>
-                                                    <Link to="/account" className="text-gray-300 hover:text-white">Cuenta</Link>
-                                                    {isAdmin && <Link to="/admin" className="text-lime-300 hover:text-lime-200">Admin</Link>}
-                                                    <button onClick={logout} className="px-3 py-1 rounded-md bg-gray-800 border border-white/10 text-gray-200 hover:bg-gray-700">Salir</button>
-                                                </>
-                                        ) : (
-                                                <>
-                                                    <Link to="/login" className="text-gray-300 hover:text-white">Login</Link>
-                                                    <Link to="/register" className="text-lime-300 hover:text-lime-200">Registro</Link>
-                                                </>
-                                        )}
                 </div>
+
+                {/* Mobile Menu */}
+                {isMobileMenuOpen && (
+                    <div className="md:hidden border-t border-white/10 py-4 space-y-2 animate-in slide-in-from-top duration-300">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.to}
+                                to={link.to}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
+                                    isActive(link.to)
+                                        ? 'text-lime-300 bg-lime-300/10'
+                                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                        
+                        <div className="border-t border-white/10 pt-4 mt-4">
+                            {user ? (
+                                <div className="space-y-2">
+                                    <Link
+                                        to="/account"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300"
+                                    >
+                                        <div className="w-5 h-5">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-full h-full">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                <circle cx="12" cy="7" r="4"/>
+                                            </svg>
+                                        </div>
+                                        <span>Mi Cuenta</span>
+                                    </Link>
+                                    {isAdmin && (
+                                        <Link
+                                            to="/admin"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="block px-4 py-3 text-lime-300 hover:bg-lime-300/10 rounded-lg transition-all duration-300"
+                                        >
+                                            Administrador
+                                        </Link>
+                                    )}
+                                    <button
+                                        onClick={() => {
+                                            logout();
+                                            setIsMobileMenuOpen(false);
+                                        }}
+                                        className="w-full text-left px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300"
+                                    >
+                                        Cerrar Sesión
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="space-y-2">
+                                    <Link
+                                        to="/login"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300"
+                                    >
+                                        Iniciar Sesión
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="block px-4 py-3 text-center text-gray-900 bg-gradient-to-r from-lime-300 to-emerald-400 hover:from-lime-400 hover:to-emerald-500 rounded-lg transition-all duration-300 font-medium"
+                                    >
+                                        Registrarse
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
-            
-            {/* Border line */}
-            <div className="w-full h-0 mt-4 border-t border-white/20"></div>
         </header>
         
         </>

@@ -27,36 +27,12 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
   try {
     // Verificar que las variables estén configuradas
     if (!MAILGUN_API_KEY || MAILGUN_API_KEY === 'tu-api-key-aqui' || !MAILGUN_DOMAIN || MAILGUN_DOMAIN === 'tu-dominio-aqui') {
-      console.error('❌ Mailgun no configurado correctamente. Verifica las variables de entorno.');
-      console.log('Variables actuales:', {
-        MAILGUN_API_KEY: MAILGUN_API_KEY ? 'Configurado' : 'No configurado',
-        MAILGUN_DOMAIN: MAILGUN_DOMAIN,
-        FROM_EMAIL: FROM_EMAIL
-      });
       return false;
     }
 
-    console.log('📧 Enviando email real con Mailgun...');
-    console.log('Destinatario:', emailData.to);
-    console.log('Asunto:', emailData.subject);
-    console.log('Dominio configurado:', MAILGUN_DOMAIN);
-    console.log('Email FROM:', FROM_EMAIL);
-    console.log('API Key (primeros 15 chars):', MAILGUN_API_KEY.substring(0, 15) + '...');
-    console.log('URL completa:', `https://api.eu.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`);
-
-    // Verificar si estamos en sandbox
-    const isSandbox = MAILGUN_DOMAIN.includes('sandbox');
-    if (isSandbox) {
-      console.log('🚨 Modo sandbox - Solo destinatarios autorizados');
-    } else {
-      console.log('✅ Usando dominio verificado - Envío sin restricciones');
-    }
-
-    console.log('🔄 Intentando envío con endpoint europeo...');
-    
     // Primer intento con la configuración actual
     try {
-      const response = await mg.messages.create(MAILGUN_DOMAIN, {
+      await mg.messages.create(MAILGUN_DOMAIN, {
         from: FROM_EMAIL,
         to: emailData.to,
         subject: emailData.subject,
@@ -64,11 +40,8 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
         text: emailData.text || stripHtml(emailData.html),
       });
 
-      console.log('✅ Email enviado exitosamente:', response);
       return true;
     } catch (firstError: any) {
-      console.log('❌ Falló con API Key del dominio, intentando con API Key privada...');
-      
       // Segundo intento con API Key privada
       const mgPrivate = mailgun.client({
         username: 'api',
@@ -77,7 +50,7 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
       });
 
       try {
-        const response = await mgPrivate.messages.create(MAILGUN_DOMAIN, {
+        await mgPrivate.messages.create(MAILGUN_DOMAIN, {
           from: FROM_EMAIL,
           to: emailData.to,
           subject: emailData.subject,
@@ -85,11 +58,8 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
           text: emailData.text || stripHtml(emailData.html),
         });
 
-        console.log('✅ Email enviado exitosamente con API Key privada:', response);
         return true;
       } catch (secondError: any) {
-        console.log('❌ Falló con API Key privada, intentando endpoint US...');
-        
         // Tercer intento con endpoint estadounidense
         const mgUS = mailgun.client({
           username: 'api',
@@ -97,7 +67,7 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
           url: 'https://api.mailgun.net' // Endpoint US
         });
 
-        const response = await mgUS.messages.create(MAILGUN_DOMAIN, {
+        await mgUS.messages.create(MAILGUN_DOMAIN, {
           from: FROM_EMAIL,
           to: emailData.to,
           subject: emailData.subject,
@@ -105,46 +75,11 @@ export async function sendEmail(emailData: EmailData): Promise<boolean> {
           text: emailData.text || stripHtml(emailData.html),
         });
 
-        console.log('✅ Email enviado exitosamente con endpoint US:', response);
         return true;
       }
     }
 
   } catch (error: any) {
-    console.error('❌ Error enviando email:', error);
-    
-    // Información adicional para debug
-    if (error instanceof Error) {
-      console.error('Error message:', error.message);
-    }
-    
-    // Información específica del error HTTP
-    if (error.status) {
-      console.error('HTTP Status:', error.status);
-    }
-    if (error.details) {
-      console.error('Error details:', error.details);
-    }
-    
-    console.log('🔧 DIAGNÓSTICO DETALLADO:');
-    console.log('1. Dominio configurado:', MAILGUN_DOMAIN);
-    console.log('2. FROM email:', FROM_EMAIL);
-    console.log('3. TO email:', emailData.to);
-    console.log('4. API Key válida:', MAILGUN_API_KEY ? 'Sí' : 'No');
-    
-    if (MAILGUN_DOMAIN.includes('sandbox')) {
-      console.log('🚨 PROBLEMA DETECTADO: Estás usando dominio sandbox');
-      console.log('• Sandbox solo permite emails a direcciones autorizadas');
-      console.log('• Para envío sin restricciones, configura mg.diegodpl.com');
-    } else {
-      console.log('🔍 POSIBLES CAUSAS:');
-      console.log('• El dominio mg.diegodpl.com no está completamente verificado');
-      console.log('• La API Key del dominio no tiene permisos correctos');
-      console.log('• Los registros DNS pueden no haberse propagado completamente');
-      console.log('• El email FROM no coincide con el dominio');
-      console.log('• Necesitas usar la API Key PRIVADA de tu cuenta, no la del dominio');
-    }
-    
     return false;
   }
 }
@@ -283,7 +218,6 @@ export async function sendDownloadEmail(
   const digitalItems = items.filter(item => item.type === 'digital');
   
   if (digitalItems.length === 0) {
-    console.log('No hay productos digitales para enviar por email');
     return true;
   }
 

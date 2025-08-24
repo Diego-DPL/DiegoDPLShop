@@ -244,45 +244,35 @@ const Home: React.FC = () => {
                                 </p>
                             </div>
 
-                            {/* Updated product-focused selling points */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-                                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                                    <div className="text-lime-300 text-2xl font-bold mb-2">🎵 Sample Libraries</div>
-                                    <div className="text-gray-300 text-sm">Colecciones premium organizadas por géneros</div>
-                                </div>
-                                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                                    <div className="text-lime-300 text-2xl font-bold mb-2">🔄 Remixes & Mashups</div>
-                                    <div className="text-gray-300 text-sm">Versiones únicas de tracks populares</div>
-                                </div>
-                                <div className="bg-green-500/20 backdrop-blur-sm rounded-2xl p-6 border border-green-400/30">
-                                    <div className="text-green-400 text-2xl font-bold mb-2">🎁 Contenido Gratuito</div>
-                                    <div className="text-gray-300 text-sm">Samples y loops gratuitos cada mes</div>
-                                </div>
-                                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                                    <div className="text-yellow-400 text-2xl font-bold mb-2">🏆 Calidad Garantizada</div>
-                                    <div className="text-gray-300 text-sm">Respaldado por experiencia y resultados</div>
-                                </div>
-                            </div>                            
-
+                            {/* Results-focused CTA */}
+                            <div className="pt-6">
+                                <a 
+                                    href="/about" 
+                                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-4 hover:border-lime-300/50 transition-all duration-300"
+                                >
+                                    <span className="text-white font-semibold">Conoce Mi Historia Completa</span>
+                                    <span className="text-lime-300 group-hover:translate-x-1 transition-transform">→</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Features & Services Section */}
+            {/* Product Features Section - Nueva sección independiente */}
             <div className="w-full py-20 md:py-32 bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 relative">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(193,241,126,0.08),transparent_50%)]"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(193,241,126,0.05),transparent_50%)]"></div>
                 
                 <div className="relative max-w-7xl mx-auto px-4 md:px-8">
                     <div className="text-center mb-16">
-                        <span className="text-lime-300 text-sm font-semibold uppercase tracking-wider">Nuestros Servicios</span>
+                        <span className="text-lime-300 text-sm font-semibold uppercase tracking-wider">Nuestros Productos</span>
                         <h2 className="text-gray-100 text-4xl md:text-5xl font-bold mt-4 mb-6 leading-tight">
                             Todo lo que necesitas para
                             <span className="text-lime-300"> elevar tu música</span>
                         </h2>
                         <p className="text-gray-300 text-xl max-w-3xl mx-auto">
-                            Desde sample libraries premium hasta remixes exclusivos, tenemos todo lo que necesitas para destacar en la industria musical.
+                            Desde sample libraries premium hasta drum kits profesionales, tenemos todo lo que necesitas para destacar en la industria musical.
                         </p>
                     </div>
 
@@ -316,10 +306,10 @@ const Home: React.FC = () => {
                     {/* Results-focused CTA */}
                     <div className="text-center">
                         <a 
-                            href="/about" 
-                            className="group inline-flex items-center gap-4 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl px-8 py-4 hover:border-lime-300/50 hover:bg-lime-300/5 transition-all duration-300"
+                            href="/catalog" 
+                            className="group inline-flex items-center gap-4 bg-gradient-to-r from-lime-300/10 to-green-400/10 backdrop-blur-sm border border-lime-300/30 rounded-2xl px-8 py-4 hover:border-lime-300/50 hover:bg-lime-300/5 transition-all duration-300"
                         >
-                            <span className="text-white font-semibold text-lg">Conoce Mi Historia Completa</span>
+                            <span className="text-white font-semibold text-lg">Ver Catálogo Completo</span>
                             <span className="text-lime-300 group-hover:translate-x-2 transition-transform text-xl">→</span>
                         </a>
                     </div>

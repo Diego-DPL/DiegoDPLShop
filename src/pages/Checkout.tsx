@@ -46,10 +46,6 @@ const Checkout: React.FC = () => {
       // Generar número de pedido único
       const orderNumber = 'FREE-' + Date.now().toString(36).toUpperCase();
       
-      console.log('🔄 Procesando productos gratuitos...');
-      console.log('Email destinatario:', user!.email);
-      console.log('Número de orden:', orderNumber);
-      
       // Enviar email con enlaces de descarga
       const emailSuccess = await sendDownloadEmail(
         user!.email!,
@@ -59,7 +55,6 @@ const Checkout: React.FC = () => {
       );
       
       if (emailSuccess) {
-        console.log('✅ Email enviado exitosamente');
         setEmailSent(true);
         clear();
         
@@ -68,11 +63,9 @@ const Checkout: React.FC = () => {
           navigate('/success?type=free&orderNumber=' + orderNumber);
         }, 2000);
       } else {
-        console.error('❌ Error al enviar email');
         alert('Error al enviar el email con los enlaces de descarga. Por favor, contacta con soporte o inténtalo de nuevo.');
       }
     } catch (error) {
-      console.error('❌ Error procesando productos gratuitos:', error);
       alert('Error al procesar la compra gratuita. Por favor, inténtalo de nuevo o contacta con soporte.');
     }
   }
@@ -83,8 +76,6 @@ const Checkout: React.FC = () => {
       const orderNumber = 'PAID-' + Date.now().toString(36).toUpperCase();
       
       // TODO: Integración con Stripe
-      console.log('Redirigiendo a Stripe para procesar pago...');
-      console.log('Orden:', orderNumber, 'Total:', totalPriceCents);
       
       // Por ahora, simular éxito y enviar email
       alert('Procesamiento de pago no implementado aún. Simulando éxito...');
@@ -101,7 +92,6 @@ const Checkout: React.FC = () => {
         navigate('/success?type=paid&orderNumber=' + orderNumber);
       }
     } catch (error) {
-      console.error('Error procesando productos de pago:', error);
       alert('Error al procesar el pago. Por favor, inténtalo de nuevo.');
     }
   }

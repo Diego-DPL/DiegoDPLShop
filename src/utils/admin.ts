@@ -53,10 +53,8 @@ export async function promoteUserToAdmin(uid: string) {
       role: 'admin'
     });
     
-    console.log(`Usuario ${uid} promovido a administrador`);
     return true;
   } catch (error) {
-    console.error('Error al promover usuario:', error);
     throw error;
   }
 }
@@ -75,7 +73,6 @@ export async function getUserRole(uid: string): Promise<'user' | 'admin' | null>
     
     return userDoc.data().role || 'user';
   } catch (error) {
-    console.error('Error al obtener rol de usuario:', error);
     return null;
   }
 }
