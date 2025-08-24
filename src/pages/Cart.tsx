@@ -202,29 +202,29 @@ const Cart: React.FC = () => {
                 {/* Cart Items */}
                 <div className="lg:col-span-2 space-y-4">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-100">Productos en tu carrito</h2>
+                    <h2 className="text-xl md:text-2xl font-bold text-gray-100">Productos en tu carrito</h2>
                     <button
                       onClick={handleClearCart}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                      className={`px-3 py-2 md:px-4 text-sm md:text-base rounded-lg font-medium transition-all duration-300 ${
                         showClearConfirm 
                           ? 'bg-red-600 hover:bg-red-700 text-white' 
                           : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-600'
                       }`}
                     >
-                      {showClearConfirm ? '¿Confirmar vaciado?' : 'Vaciar carrito'}
+                      {showClearConfirm ? '¿Confirmar?' : 'Vaciar'}
                     </button>
                   </div>
 
                   {items.map((item) => (
                     <div 
                       key={item.id} 
-                      className={`bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-6 transition-all duration-300 hover:border-lime-500/30 ${
+                      className={`bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-4 md:p-6 transition-all duration-300 hover:border-lime-500/30 ${
                         removingItem === item.id ? 'opacity-50 scale-95' : ''
                       }`}
                     >
-                      <div className="flex gap-6">
+                      <div className="flex gap-4 md:gap-6">
                         {/* Product Image */}
-                        <div className="w-32 h-24 bg-gray-800 rounded-lg overflow-hidden flex-shrink-0 border border-gray-600">
+                        <div className="w-20 h-16 md:w-32 md:h-24 bg-gray-800 rounded-lg overflow-hidden flex-shrink-0 border border-gray-600">
                           <img 
                             src={item.image} 
                             alt={item.name} 
@@ -235,13 +235,13 @@ const Cart: React.FC = () => {
                         {/* Product Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between mb-3">
-                            <div>
-                              <h3 className="text-xl font-bold text-gray-100 mb-1 leading-tight">{item.name}</h3>
+                            <div className="flex-1 min-w-0 pr-2">
+                              <h3 className="text-lg md:text-xl font-bold text-gray-100 mb-1 leading-tight">{item.name}</h3>
                               <p className="text-gray-400 text-sm">Sample Library Premium</p>
                             </div>
                             <button
                               onClick={() => handleRemoveItem(item.id)}
-                              className="text-gray-400 hover:text-red-400 transition-colors duration-300 p-2 hover:bg-red-500/10 rounded-lg"
+                              className="text-gray-400 hover:text-red-400 transition-colors duration-300 p-2 hover:bg-red-500/10 rounded-lg flex-shrink-0"
                               disabled={removingItem === item.id}
                             >
                               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -250,8 +250,47 @@ const Cart: React.FC = () => {
                             </button>
                           </div>
 
-                          {/* Quantity and Price */}
-                          <div className="flex items-center justify-between">
+                          {/* Mobile Layout for Quantity and Price */}
+                          <div className="md:hidden space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-lg md:text-2xl font-bold text-lime-300">{formatCents(item.price * item.quantity)}</span>
+                              {item.quantity > 1 && (
+                                <span className="text-sm text-gray-400">{formatCents(item.price)} c/u</span>
+                              )}
+                            </div>
+                            <div className="flex items-center justify-between bg-gray-800/50 rounded-lg p-2">
+                              <span className="text-gray-300 text-sm font-medium">Cantidad:</span>
+                              <div className="flex items-center bg-gray-800 rounded-lg border border-gray-600">
+                                <button
+                                  onClick={() => setQty(item.id, Math.max(1, item.quantity - 1))}
+                                  className="p-2 text-gray-400 hover:text-white transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 13H5v-2h14v2z"/>
+                                  </svg>
+                                </button>
+                                <input
+                                  type="number"
+                                  min={1}
+                                  max={99}
+                                  value={item.quantity}
+                                  onChange={(e) => setQty(item.id, Math.max(1, Math.min(99, Number(e.target.value) || 1)))}
+                                  className="w-12 bg-transparent text-gray-200 text-center py-2 focus:outline-none"
+                                />
+                                <button
+                                  onClick={() => setQty(item.id, Math.min(99, item.quantity + 1))}
+                                  className="p-2 text-gray-400 hover:text-white transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                  </svg>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Desktop Layout for Quantity and Price */}
+                          <div className="hidden md:flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <label className="text-gray-300 text-sm font-medium">Cantidad:</label>
                               <div className="flex items-center bg-gray-800 rounded-lg border border-gray-600">
@@ -297,8 +336,8 @@ const Cart: React.FC = () => {
 
                 {/* Order Summary */}
                 <div className="lg:col-span-1">
-                  <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-6 sticky top-24">
-                    <h3 className="text-xl font-bold text-gray-100 mb-6">Resumen del pedido</h3>
+                  <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-4 md:p-6 lg:sticky lg:top-24">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-100 mb-4 md:mb-6">Resumen del pedido</h3>
                     
                     <div className="space-y-4 mb-6">
                       <div className="flex justify-between text-gray-300">
@@ -340,9 +379,9 @@ const Cart: React.FC = () => {
                     <div className="space-y-3">
                       <Link 
                         to="/checkout" 
-                        className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-lime-400 to-emerald-500 hover:from-lime-500 hover:to-emerald-600 text-gray-900 font-bold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                        className="w-full flex items-center justify-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 bg-gradient-to-r from-lime-400 to-emerald-500 hover:from-lime-500 hover:to-emerald-600 text-gray-900 font-bold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-sm md:text-base"
                       >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
                         </svg>
                         Finalizar Compra
@@ -350,7 +389,7 @@ const Cart: React.FC = () => {
                       
                       <Link 
                         to="/catalog" 
-                        className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium rounded-lg border border-gray-600 transition-colors duration-300"
+                        className="w-full flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium rounded-lg border border-gray-600 transition-colors duration-300 text-sm md:text-base"
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
