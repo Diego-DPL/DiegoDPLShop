@@ -334,9 +334,9 @@ const Home: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* Updated Product Cards with remixes and free content */}
+                    {/* Product Cards - Productos Reales de DiegoDPL */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                        {/* Sample Pack */}
+                        {/* 808 Vibes Sample Pack */}
                         <div className="group bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-lime-300/30 transition-all duration-500 hover:transform hover:scale-105">
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="w-16 h-16 bg-gradient-to-br from-lime-300 to-green-400 rounded-2xl flex items-center justify-center">
@@ -345,23 +345,53 @@ const Home: React.FC = () => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-white text-lg font-bold">Urban Trap Pack</h3>
-                                    <p className="text-gray-400 text-sm">25 Samples • 8 Drum Kits</p>
+                                    <h3 className="text-white text-lg font-bold">808 Vibes - Sample Pack</h3>
+                                    <p className="text-gray-400 text-sm">150+ Samples • Trap • Club Ready</p>
                                 </div>
                             </div>
                             <p className="text-gray-300 mb-4">
-                                Colección completa de <strong className="text-lime-300">sonidos urbanos</strong> perfectos para producciones trap modernas.
+                                <strong className="text-lime-300">808s potentes, kicks, snares y loops</strong> listos para club. Probados en pista con 
+                                sonidos que garantizan impacto en tus producciones trap.
                             </p>
                             <div className="flex items-center gap-4">
-                                <button className="flex-1 bg-lime-300 text-gray-900 py-3 rounded-xl font-semibold hover:bg-lime-400 transition-colors">
+                                <Link 
+                                    to="/catalog" 
+                                    className="flex-1 bg-lime-300 text-gray-900 py-3 rounded-xl font-semibold hover:bg-lime-400 transition-colors text-center"
+                                >
                                     ▶ Escuchar Preview
-                                </button>
-                                <div className="text-gray-400 text-sm">€15</div>
+                                </Link>
+                                <div className="text-lime-300 text-lg font-bold">€19</div>
                             </div>
                         </div>
 
-                        {/* Remix Pack */}
-                        <div className="group bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-lime-300/30 transition-all duration-500 hover:transform hover:scale-105">
+                        {/* Remix Exclusivo - Lorena Santos */}
+                        <div className="group bg-gradient-to-br from-yellow-400/10 to-yellow-600/10 backdrop-blur-sm rounded-2xl p-8 border border-yellow-400/30 hover:border-yellow-400/50 transition-all duration-500 hover:transform hover:scale-105">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center">
+                                    <span className="text-gray-900 text-2xl font-bold">🏆</span>
+                                </div>
+                                <div>
+                                    <h3 className="text-white text-lg font-bold">Remix Exclusivo - Lorena</h3>
+                                    <p className="text-yellow-400 text-sm">DISCO DE PLATINO • EXCLUSIVO</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-300 mb-4">
+                                <strong className="text-yellow-400">Remix exclusivo de "La Historia"</strong> de Lorena Santos. 
+                                La versión que llevó al Disco de Platino, <strong className="text-white">solo disponible aquí</strong>.
+                            </p>
+                            <div className="flex items-center gap-4">
+                                <Link 
+                                    to="/catalog" 
+                                    className="flex-1 bg-yellow-400 text-gray-900 py-3 rounded-xl font-semibold hover:bg-yellow-500 transition-colors text-center"
+                                >
+                                    ▶ Escuchar Hit
+                                </Link>
+                                <div className="text-yellow-400 text-lg font-bold">€9</div>
+                            </div>
+                        </div>
+
+                        {/* Mashup Fiesta - Club Tool */}
+                        <div className="group bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-8 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-500 hover:transform hover:scale-105">
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center">
                                     <svg className="w-8 h-8 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
@@ -369,40 +399,49 @@ const Home: React.FC = () => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-white text-lg font-bold">Remix Collection</h3>
-                                    <p className="text-gray-400 text-sm">5 Remixes • 3 Mashups</p>
+                                    <h3 className="text-white text-lg font-bold">Mashup Fiesta - Club Tool</h3>
+                                    <p className="text-purple-400 text-sm">PROBADO EN PISTA • CLUB READY</p>
                                 </div>
                             </div>
                             <p className="text-gray-300 mb-4">
-                                <strong className="text-purple-400">Versiones exclusivas</strong> de hits populares con mi toque personal y estilo único.
+                                <strong className="text-purple-400">Mashup probado en pista</strong> para levantar cualquier set. 
+                                La herramienta secreta que uso en mis sesiones para <strong className="text-white">garantizar el climax</strong>.
                             </p>
                             <div className="flex items-center gap-4">
-                                <button className="flex-1 bg-purple-400 text-gray-900 py-3 rounded-xl font-semibold hover:bg-purple-500 transition-colors">
-                                    ▶ Escuchar Remixes
-                                </button>
-                                <div className="text-gray-400 text-sm">€25</div>
+                                <Link 
+                                    to="/catalog" 
+                                    className="flex-1 bg-purple-400 text-gray-900 py-3 rounded-xl font-semibold hover:bg-purple-500 transition-colors text-center"
+                                >
+                                    ▶ Escuchar Tool
+                                </Link>
+                                <div className="text-purple-400 text-lg font-bold">€7</div>
                             </div>
                         </div>
 
-                        {/* Free Content */}
-                        <div className="group bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-sm rounded-2xl p-8 border border-green-400/30 hover:border-green-400/50 transition-all duration-500 hover:transform hover:scale-105">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center">
-                                    <span className="text-gray-900 text-2xl font-bold">�</span>
+                        {/* Bonus: Descarga Gratuita */}
+                        <div className="md:col-span-2 lg:col-span-3">
+                            <div className="group bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm rounded-2xl p-8 border border-green-400/30 hover:border-green-400/50 transition-all duration-500 hover:transform hover:scale-[1.02] max-w-2xl mx-auto">
+                                <div className="text-center">
+                                    <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <span className="text-gray-900 text-3xl font-bold">🎁</span>
+                                    </div>
+                                    <h3 className="text-white text-2xl font-bold mb-3">Prueba Mi Estilo - Pack Gratuito</h3>
+                                    <p className="text-green-400 text-sm font-semibold uppercase tracking-wider mb-4">DESCARGA DIRECTA • SIN REGISTRO</p>
+                                    <p className="text-gray-300 text-lg mb-6 max-w-xl mx-auto">
+                                        Descarga <strong className="text-green-400">5 samples exclusivos</strong> para que experimentes la calidad y 
+                                        estilo que ofrezco. <strong className="text-white">Sin compromisos, sin email</strong> - solo buena música.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                        <a 
+                                            href="#free-download" 
+                                            className="bg-green-400 text-gray-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-500 transition-colors inline-flex items-center gap-2"
+                                        >
+                                            🎁 Descargar Gratis Ahora
+                                            <span className="text-xl">↓</span>
+                                        </a>
+                                        <div className="text-green-400 text-xl font-bold">100% GRATIS</div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-white text-lg font-bold">Pack Gratuito</h3>
-                                    <p className="text-green-400 text-sm">CONTENIDO MENSUAL GRATIS</p>
-                                </div>
-                            </div>
-                            <p className="text-gray-300 mb-4">
-                                Cada mes compartimos <strong className="text-green-400">samples, loops y elementos gratuitos</strong> para que pruebes nuestro estilo.
-                            </p>
-                            <div className="flex items-center gap-4">
-                                <button className="flex-1 bg-green-400 text-gray-900 py-3 rounded-xl font-semibold hover:bg-green-500 transition-colors">
-                                    🎁 Descargar Gratis
-                                </button>
-                                <div className="text-green-400 text-sm font-bold">FREE</div>
                             </div>
                         </div>
                     </div>
