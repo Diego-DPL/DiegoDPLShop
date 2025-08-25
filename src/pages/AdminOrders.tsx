@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { formatCents } from '../utils/format';
 import type { Order, OrderSummary } from '../utils/orders';
@@ -18,27 +18,41 @@ const AdminOrders: React.FC = () => {
   async function loadOrders() {
     try {
       setLoading(true);
-      let ordersQuery = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
       
-      if (filter !== 'all') {
+      let ordersQuery;
+      if (filter === 'all') {
+        // Consulta simple para todos los documentos
+        ordersQuery = query(collection(db, 'orders'));
+      } else {
+        // Consulta filtrada por estado sin orderBy
         ordersQuery = query(
           collection(db, 'orders'),
-          where('status', '==', filter),
-          orderBy('createdAt', 'desc')
+          where('status', '==', filter)
         );
       }
 
       const snapshot = await getDocs(ordersQuery);
-      const ordersData = snapshot.docs.map(doc => ({
+      let ordersData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Order[];
+
+      // Ordenar en el cliente por fecha (más recientes primero)
+      ordersData = ordersData.sort((a, b) => {
+        const dateA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const dateB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return dateB - dateA;
+      });
 
       setOrders(ordersData);
       generateSummary(ordersData);
     } catch (err: any) {
       console.error('Error al cargar órdenes:', err);
-      setError('Error al cargar las órdenes');
+      if (err.code === 'failed-precondition') {
+        setError('Configurando base de datos... Inténtalo de nuevo en unos minutos.');
+      } else {
+        setError('Error al cargar las órdenes');
+      }
     } finally {
       setLoading(false);
     }

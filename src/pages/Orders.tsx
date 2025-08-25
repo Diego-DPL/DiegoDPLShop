@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { collection, query, where, orderBy, getDocs, limit } from 'firebase/firestore';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { formatCents } from '../utils/format';
 import type { Order } from '../utils/orders';
@@ -24,23 +24,35 @@ const Orders: React.FC = () => {
   async function loadOrders() {
     try {
       setLoading(true);
+      
+      // Consulta simple sin orderBy para evitar error de índice
       const ordersQuery = query(
         collection(db, 'orders'),
         where('userId', '==', user!.uid),
-        orderBy('createdAt', 'desc'),
         limit(50)
       );
 
       const snapshot = await getDocs(ordersQuery);
-      const ordersData = snapshot.docs.map(doc => ({
+      let ordersData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Order[];
 
+      // Ordenar en el cliente por fecha (más recientes primero)
+      ordersData = ordersData.sort((a, b) => {
+        const dateA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const dateB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return dateB - dateA;
+      });
+
       setOrders(ordersData);
     } catch (err: any) {
       console.error('Error al cargar órdenes:', err);
-      setError('Error al cargar el historial de compras');
+      if (err.code === 'failed-precondition') {
+        setError('Configurando base de datos... Inténtalo de nuevo en unos minutos.');
+      } else {
+        setError('Error al cargar el historial de compras');
+      }
     } finally {
       setLoading(false);
     }
