@@ -571,7 +571,7 @@ const Contact: React.FC = () => {
                             </a>
                             
                             <a 
-                                href="https://tiktok.com/@diegodpl" 
+                                href="https://tiktok.com/@diegodpl_" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="group p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl hover:scale-110 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/25"

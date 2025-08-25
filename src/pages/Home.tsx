@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import diegoDPLDJ from '../assets/images/DiegoDPL_DJ_Pinchando.png';
 import discoplatino from '../assets/images/Disco_platino_historia.webp';
 
@@ -128,13 +129,13 @@ const Home: React.FC = () => {
 
                             {/* CTA with free content mention */}
                             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-                                <a 
-                                    href="/catalog" 
+                                <Link 
+                                    to="/catalog" 
                                     className="group bg-gradient-to-r from-lime-300 to-green-400 text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg hover:from-lime-400 hover:to-green-500 transform hover:scale-105 transition-all duration-300 shadow-2xl shadow-lime-300/25"
                                 >
                                     Explorar Catálogo
                                     <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                                </a>
+                                </Link>
                                 <a 
                                     href="#preview-audio" 
                                     className="group border-2 border-green-400/50 text-green-400 px-8 py-4 rounded-2xl font-semibold text-lg hover:border-green-400 hover:bg-green-400/10 transition-all duration-300"
@@ -246,13 +247,13 @@ const Home: React.FC = () => {
 
                             {/* Results-focused CTA */}
                             <div className="pt-6">
-                                <a 
-                                    href="/about" 
+                                <Link 
+                                    to="/about-me" 
                                     className="group inline-flex items-center gap-3 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-4 hover:border-lime-300/50 transition-all duration-300"
                                 >
                                     <span className="text-white font-semibold">Conoce Mi Historia Completa</span>
                                     <span className="text-lime-300 group-hover:translate-x-1 transition-transform">→</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -305,13 +306,13 @@ const Home: React.FC = () => {
 
                     {/* Results-focused CTA */}
                     <div className="text-center">
-                        <a 
-                            href="/catalog" 
+                        <Link 
+                            to="/catalog" 
                             className="group inline-flex items-center gap-4 bg-gradient-to-r from-lime-300/10 to-green-400/10 backdrop-blur-sm border border-lime-300/30 rounded-2xl px-8 py-4 hover:border-lime-300/50 hover:bg-lime-300/5 transition-all duration-300"
                         >
                             <span className="text-white font-semibold text-lg">Ver Catálogo Completo </span>
                             <span className="text-lime-300 group-hover:translate-x-2 transition-transform text-xl">→</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -473,21 +474,21 @@ const Home: React.FC = () => {
                     {/* Professional CTA */}
                     <div className="space-y-8">
                         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                            <a 
-                                href="/catalog" 
+                            <Link 
+                                to="/catalog" 
                                 className="group bg-gradient-to-r from-lime-300 to-green-400 text-gray-900 px-12 py-6 rounded-2xl font-bold text-xl hover:from-lime-400 hover:to-green-500 transform hover:scale-105 transition-all duration-300 shadow-2xl shadow-lime-300/25"
                             >
                                 Ver Catálogo Completo
                                 <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
+                            </Link>
                             
-                            <a 
-                                href="/contact" 
+                            <Link 
+                                to="/contact" 
                                 className="group border-2 border-lime-300/50 text-lime-300 px-12 py-6 rounded-2xl font-bold text-xl hover:bg-lime-300/10 hover:border-lime-300 transition-all duration-300"
                             >
                                 Colaboraciones Personalizadas
-                                <span className="inline-block ml-2 group-hover:rotate-12 transition-transform">�</span>
-                            </a>
+                                <span className="inline-block ml-2 group-hover:rotate-12 transition-transform">🎵</span>
+                            </Link>
                         </div>
 
                         {/* Updated stats */}
