@@ -1,13 +1,295 @@
 <!doctype html>
-<html lang="en">
+<html lang="es" itemscope itemtype="https://schema.org/WebSite">
   <head>
+    <!-- ============================================ -->
+    <!-- CONFIGURACIÓN BÁSICA Y PERFORMANCE -->
+    <!-- ============================================ -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diego DPL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Preconnect para mejorar performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://firebaseapp.com" />
+    <link rel="preconnect" href="https://googleapis.com" />
+    
+    <!-- DNS Prefetch para APIs externas -->
+    <link rel="dns-prefetch" href="//api.mailgun.net" />
+    <link rel="dns-prefetch" href="//storage.googleapis.com" />
+    
+    <!-- ============================================ -->
+    <!-- SEO TITLE Y META DESCRIPTIONS -->
+    <!-- ============================================ -->
+    <title>DiegoDPL - Productor Musical Profesional | Beats, Remixes y Sample Libraries</title>
+    <meta name="description" content="🎵 Descubre los beats profesionales, remixes exclusivos y sample libraries de DiegoDPL. Más de 15 años creando música electrónica de calidad. Disco de Platino con 'La Historia'. Descarga inmediata, calidad garantizada." />
+    
+    <!-- Meta Keywords (aunque menos relevante, algunos motores lo usan) -->
+    <meta name="keywords" content="DiegoDPL, beats profesionales, remixes, sample libraries, música electrónica, producer, DJ, beats para raperos, instrumentales, producción musical, house music, musica indie, electronic music, music producer Spain, beats descarga, remixes exclusivos, mashups" />
+    
+    <!-- Información del autor -->
+    <meta name="author" content="DiegoDPL" />
+    <meta name="creator" content="DiegoDPL Music Producer" />
+    <meta name="publisher" content="DiegoDPL Shop" />
+    
+    <!-- ============================================ -->
+    <!-- OPEN GRAPH PARA REDES SOCIALES -->
+    <!-- ============================================ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DiegoDPL Shop" />
+    <meta property="og:title" content="DiegoDPL - Productor Musical Profesional | Beats y Remixes Exclusivos" />
+    <meta property="og:description" content="🎵 Más de 15 años creando música electrónica profesional. Disco de Platino con 'La Historia'. Beats, remixes y sample libraries de calidad internacional. ¡Descarga inmediata!" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DiegoDPL - Productor Musical Profesional creando beats en su estudio" />
+    <meta property="og:url" content="https://diegodpl.com" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    
+    <!-- Facebook específico -->
+    <meta property="fb:app_id" content="your-facebook-app-id" />
+    
+    <!-- ============================================ -->
+    <!-- TWITTER CARDS -->
+    <!-- ============================================ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DiegoDPL" />
+    <meta name="twitter:creator" content="@DiegoDPL" />
+    <meta name="twitter:title" content="DiegoDPL - Beats Profesionales y Remixes Exclusivos" />
+    <meta name="twitter:description" content="🎵 Productor musical con +15 años de experiencia. Disco de Platino. Beats, remixes y sample libraries de calidad internacional. ¡Descarga inmediata!" />
+    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image:alt" content="DiegoDPL en su estudio de producción musical" />
+    
+    <!-- ============================================ -->
+    <!-- STRUCTURED DATA (JSON-LD) -->
+    <!-- ============================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://diegodpl.com/#person",
+          "name": "DiegoDPL",
+          "alternateName": "Diego DPL",
+          "description": "Productor musical profesional especializado en música electrónica, beats y remixes",
+          "jobTitle": "Music Producer & DJ",
+          "knowsAbout": ["Producción Musical", "DJ", "Música Electrónica", "Beats", "Remixes", "House Music", "Techno"],
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Music Producer",
+            "occupationLocation": "Spain"
+          },
+          "award": "Disco de Platino - La Historia (Lorena Santos)",
+          "yearsOfExperience": "15+",
+          "url": "https://diegodpl.com",
+          "sameAs": [
+            "https://instagram.com/diegodpl",
+            "https://twitter.com/diegodpl",
+            "https://soundcloud.com/diegodpl",
+            "https://spotify.com/artist/diegodpl"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://diegodpl.com/#website",
+          "url": "https://diegodpl.com",
+          "name": "DiegoDPL Shop",
+          "description": "Tienda oficial de DiegoDPL - Beats profesionales, remixes exclusivos y sample libraries",
+          "publisher": {
+            "@id": "https://diegodpl.com/#person"
+          },
+          "inLanguage": "es-ES",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://diegodpl.com/catalogo?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "MusicGroup",
+          "@id": "https://diegodpl.com/#musicgroup",
+          "name": "DiegoDPL",
+          "alternateName": "Diego DPL",
+          "description": "Artista de música electrónica y productor musical profesional",
+          "genre": ["Electronic Music", "House", "Techno", "Progressive House"],
+          "member": {
+            "@id": "https://diegodpl.com/#person"
+          },
+          "award": "Disco de Platino",
+          "foundingDate": "2009",
+          "foundingLocation": "Spain"
+        },
+        {
+          "@type": "OnlineStore",
+          "@id": "https://diegodpl.com/#store",
+          "name": "DiegoDPL Shop",
+          "description": "Tienda oficial de productos musicales digitales de DiegoDPL",
+          "url": "https://diegodpl.com",
+          "currenciesAccepted": "EUR",
+          "paymentAccepted": ["Credit Card", "PayPal"],
+          "priceRange": "€€",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Catálogo Musical DiegoDPL",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "MusicRecording",
+                  "name": "Beats Profesionales"
+                }
+              },
+              {
+                "@type": "Offer", 
+                "itemOffered": {
+                  "@type": "MusicRecording",
+                  "name": "Remixes Exclusivos"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "MusicRecording", 
+                  "name": "Sample Libraries"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://diegodpl.com/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://diegodpl.com"
+            },
+            {
+              "@type": "ListItem", 
+              "position": 2,
+              "name": "Catálogo",
+              "item": "https://diegodpl.com/catalogo"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3, 
+              "name": "Sobre DiegoDPL",
+              "item": "https://diegodpl.com/sobre-mi"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- FAVICONS Y APP ICONS -->
+    <!-- ============================================ -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- ============================================ -->
+    <!-- PWA Y MOBILE OPTIMIZATION -->
+    <!-- ============================================ -->
+    <meta name="theme-color" content="#9333ea" />
+    <meta name="msapplication-TileColor" content="#9333ea" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DiegoDPL" />
+    <meta name="application-name" content="DiegoDPL Shop" />
+    
+    <!-- ============================================ -->
+    <!-- CANONICAL Y HREFLANG -->
+    <!-- ============================================ -->
+    <link rel="canonical" href="https://diegodpl.com/" />
+    <link rel="alternate" hreflang="es" href="https://diegodpl.com/" />
+    <link rel="alternate" hreflang="en" href="https://diegodpl.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://diegodpl.com/" />
+    
+    <!-- ============================================ -->
+    <!-- SECURITY Y PRIVACY -->
+    <!-- ============================================ -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+    
+    <!-- ============================================ -->
+    <!-- ROBOTS Y CRAWLING -->
+    <!-- ============================================ -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow" />
+    
+    <!-- ============================================ -->
+    <!-- PERFORMANCE Y PRELOADING -->
+    <!-- ============================================ -->
+    <link rel="preload" href="/android-chrome-512x512.png" as="image" type="image/png" />
+    <link rel="prefetch" href="/catalogo" />
+    <link rel="prefetch" href="/sobre-mi" />
+    
+    <!-- ============================================ -->
+    <!-- ANALYTICS Y TRACKING PREPARATION -->
+    <!-- ============================================ -->
+    <!-- Google Analytics 4 (GA4) - Reemplazar con tu ID -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+    <!-- <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script> -->
+    
+    <!-- Google Search Console - Reemplazar con tu token -->
+    <!-- <meta name="google-site-verification" content="your-verification-token" /> -->
+    
+    <!-- Bing Webmaster Tools - Reemplazar con tu token -->
+    <!-- <meta name="msvalidate.01" content="your-bing-verification-token" /> -->
+    
+    <!-- ============================================ -->
+    <!-- RICH SNIPPETS ADICIONALES -->
+    <!-- ============================================ -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    
+    <!-- Información del sitio -->
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="Global" />
+    <meta name="target" content="all" />
+    <meta name="audience" content="all" />
+    <meta name="rating" content="General" />
+    
+    <!-- Para música específicamente -->
+    <meta name="music:duration" content="various" />
+    <meta name="music:album" content="DiegoDPL Collection" />
+    <meta name="music:musician" content="DiegoDPL" />
+    
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Schema.org markup para el body -->
+    <div id="root" itemscope itemtype="https://schema.org/WebPage">
+      <!-- Contenido cargado por React -->
+    </div>
+    
+    <!-- Fallback para usuarios sin JavaScript -->
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>🎵 DiegoDPL - Productor Musical Profesional</h1>
+        <p>Para la mejor experiencia, por favor habilita JavaScript en tu navegador.</p>
+        <p>Descubre beats profesionales, remixes exclusivos y sample libraries de calidad internacional.</p>
+        <p>Más de 15 años de experiencia • Disco de Platino • Descarga inmediata</p>
+      </div>
+    </noscript>
+    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

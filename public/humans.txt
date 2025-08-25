@@ -1,0 +1,39 @@
+# humanstxt.org/
+# Los seres humanos detrás de DiegoDPL Shop
+
+/* TEAM */
+
+Music Producer & Artist: DiegoDPL
+Site: https://diegodpl.com
+Location: Spain
+
+/* SITE */
+
+Last update: 2025/08/25
+Language: Español / English
+Doctype: HTML5
+IDE: Visual Studio Code
+Technology: React, TypeScript, Vite, Firebase, TailwindCSS
+
+/* MUSIC */
+
+Genres: Electronic Music, House, Techno, Progressive House
+Experience: 15+ years
+Achievement: Platinum Record - "La Historia" (Lorena Santos)
+Founded: 2009
+
+/* THANKS */
+
+A todos los fans y artistas que han apoyado la música de DiegoDPL
+To all the fans and artists who have supported DiegoDPL's music
+
+Made with ❤️ and 🎵 in Spain
+
+                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                    ▄▀▀                                      ▀▀▄
+                   ▄▀    ♫ ♪ ♫ ♪ DiegoDPL Shop ♪ ♫ ♪ ♫       ▀▄
+                  ▄▀                                           ▀▄
+                 ▄▀     Music Production • DJ Sets • Beats      ▀▄
+                ▄▀                                               ▀▄
+               ▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄
+               ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀

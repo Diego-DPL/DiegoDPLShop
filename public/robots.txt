@@ -1,0 +1,67 @@
+# Robots.txt para DiegoDPL Shop
+# Optimizado para SEO y crawling eficiente
+
+User-agent: *
+Allow: /
+
+# Archivos y directorios permitidos específicamente
+Allow: /catalogo
+Allow: /sobre-mi
+Allow: /contacto
+Allow: /carrito
+Allow: /cuenta
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.mp3$
+Allow: /*.wav$
+Allow: /*.woff$
+Allow: /*.woff2$
+
+# Bloquear archivos y directorios innecesarios
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /dist/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*?utm_*
+Disallow: /*?gclid=*
+Disallow: /*?fbclid=*
+
+# Permitir motores de búsqueda específicos
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+# Configuración para redes sociales
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://diegodpl.com/sitemap.xml
+Sitemap: https://diegodpl.com/sitemap-products.xml
+Sitemap: https://diegodpl.com/sitemap-pages.xml
+
+# Host preference (reemplazar con tu dominio real)
+Host: https://diegodpl.com

@@ -1,0 +1,99 @@
+{
+  "name": "DiegoDPL Shop - Beats Profesionales y Remixes Exclusivos",
+  "short_name": "DiegoDPL",
+  "description": "Tienda oficial de DiegoDPL. Beats profesionales, remixes exclusivos y sample libraries de calidad internacional. Más de 15 años de experiencia musical.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#9333ea",
+  "background_color": "#0f0f23",
+  "lang": "es",
+  "categories": ["music", "entertainment", "shopping"],
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32x32.png", 
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "DiegoDPL Shop - Catálogo de música"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Catálogo Musical",
+      "short_name": "Catálogo",
+      "description": "Explora beats, remixes y sample libraries",
+      "url": "/catalogo",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Sobre DiegoDPL",
+      "short_name": "Sobre Mí",
+      "description": "Conoce la historia de DiegoDPL",
+      "url": "/sobre-mi",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192", 
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mi Cuenta",
+      "short_name": "Cuenta",
+      "description": "Gestiona tu cuenta y compras",
+      "url": "/cuenta",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
+}

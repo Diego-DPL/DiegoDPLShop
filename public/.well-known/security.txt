@@ -1,0 +1,30 @@
+Contact: mailto:security@diegodpl.com
+Contact: https://diegodpl.com/contacto
+Expires: 2026-08-25T23:59:59.000Z
+Encryption: https://keybase.io/diegodpl/pgp_keys.asc
+Acknowledgments: https://diegodpl.com/security-thanks
+Preferred-Languages: es, en
+Canonical: https://diegodpl.com/.well-known/security.txt
+
+# Security Policy for DiegoDPL Shop
+# We take security seriously and appreciate responsible disclosure.
+# Please report security vulnerabilities through the contact methods above.
+
+# Bug Bounty: We don't currently offer monetary rewards, but we will acknowledge 
+# researchers who help improve our security in our acknowledgments page.
+
+# Scope: This policy applies to:
+# - diegodpl.com and all subdomains
+# - Official DiegoDPL mobile applications
+# - Related infrastructure
+
+# Out of scope:
+# - Social engineering attacks
+# - Physical attacks
+# - Attacks requiring physical access to a user's device
+# - Denial of service attacks
+
+# Please do not:
+# - Access or modify data that doesn't belong to you
+# - Disrupt our services or other users
+# - Publicly disclose vulnerabilities before we've had time to fix them
