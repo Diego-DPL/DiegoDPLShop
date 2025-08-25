@@ -17,7 +17,6 @@ import VerifyEmail from "./pages/VerifyEmail"
 import Account from "./pages/Account"
 import Admin from "./pages/Admin"
 import AdminProducts from "./pages/AdminProducts"
-import Orders from "./pages/Orders"
 import AdminOrders from "./pages/AdminOrders"
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -54,7 +53,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
-          <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
           <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
           <Route path="/admin/products" element={<AdminRoute><AdminProducts /></AdminRoute>} />
           <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />

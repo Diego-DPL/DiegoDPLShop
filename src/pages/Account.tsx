@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { updatePassword as firebaseUpdatePassword, sendEmailVerification } from 'firebase/auth';
 import { db } from '../lib/firebase';
+import { formatCents } from '../utils/format';
+import type { Order } from '../utils/orders';
 
 interface UserProfile {
   displayName: string;
@@ -24,6 +26,11 @@ const Account: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'purchases' | 'preferences'>('profile');
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<{ type: 'success' | 'error' | 'info', text: string } | null>(null);
+  
+  // Orders state
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [ordersError, setOrdersError] = useState<string | null>(null);
   
   // Profile form state
   const [profileData, setProfileData] = useState<UserProfile>({
@@ -168,6 +175,112 @@ const Account: React.FC = () => {
       showMessage('error', 'No se pudo enviar el email de verificación');
     }
   };
+
+  // Load orders when purchases tab is active
+  useEffect(() => {
+    if (activeTab === 'purchases' && user && orders.length === 0) {
+      loadOrders();
+    }
+  }, [activeTab, user]);
+
+  // Auto-switch to purchases tab if user has orders
+  useEffect(() => {
+    const checkForOrders = async () => {
+      if (user && orders.length === 0 && activeTab === 'profile') {
+        try {
+          const ordersQuery = query(
+            collection(db, 'orders'),
+            where('userId', '==', user.uid),
+            limit(1)
+          );
+          const snapshot = await getDocs(ordersQuery);
+          if (!snapshot.empty) {
+            setActiveTab('purchases');
+          }
+        } catch (error) {
+          // Silently fail, stay on profile tab
+        }
+      }
+    };
+    checkForOrders();
+  }, [user]);
+
+  async function loadOrders() {
+    try {
+      setOrdersLoading(true);
+      setOrdersError(null);
+      
+      // Consulta simple sin orderBy para evitar error de índice
+      const ordersQuery = query(
+        collection(db, 'orders'),
+        where('userId', '==', user!.uid),
+        limit(50)
+      );
+
+      const snapshot = await getDocs(ordersQuery);
+      let ordersData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Order[];
+
+      // Ordenar en el cliente por fecha (más recientes primero)
+      ordersData = ordersData.sort((a, b) => {
+        const dateA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const dateB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return dateB - dateA;
+      });
+
+      setOrders(ordersData);
+    } catch (err: any) {
+      console.error('Error al cargar órdenes:', err);
+      if (err.code === 'failed-precondition') {
+        setOrdersError('Configurando base de datos... Inténtalo de nuevo en unos minutos.');
+      } else {
+        setOrdersError('Error al cargar el historial de compras');
+      }
+    } finally {
+      setOrdersLoading(false);
+    }
+  }
+
+  function getStatusColor(status: string) {
+    switch (status) {
+      case 'completed': return 'text-green-400';
+      case 'pending': return 'text-yellow-400';
+      case 'processing': return 'text-blue-400';
+      case 'failed': return 'text-red-400';
+      case 'cancelled': return 'text-gray-400';
+      default: return 'text-gray-400';
+    }
+  }
+
+  function getStatusText(status: string) {
+    switch (status) {
+      case 'completed': return 'Completada';
+      case 'pending': return 'Pendiente';
+      case 'processing': return 'Procesando';
+      case 'failed': return 'Fallida';
+      case 'cancelled': return 'Cancelada';
+      default: return status;
+    }
+  }
+
+  function formatDate(timestamp: any) {
+    if (!timestamp) return 'N/A';
+    
+    try {
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      return date.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return 'N/A';
+    }
+  }
 
   const tabs = [
     { id: 'profile', label: 'Perfil Musical', icon: '🎵' },
@@ -478,28 +591,158 @@ const Account: React.FC = () => {
                 {/* Purchases Tab */}
                 {activeTab === 'purchases' && (
                   <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">Historial de Compras</h2>
-                    
-                    <div className="text-center py-12">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                      </div>
-                      <h3 className="text-lg font-bold text-gray-300 mb-2">Sin compras aún</h3>
-                      <p className="text-gray-400 mb-6">
-                        Cuando realices tu primera compra, aparecerá aquí tu historial completo.
-                      </p>
-                      <Link 
-                        to="/catalog" 
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-lime-400 to-emerald-500 hover:from-lime-500 hover:to-emerald-600 text-gray-900 font-bold rounded-lg transition-all duration-300"
-                      >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        Explorar Catálogo
-                      </Link>
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-bold text-gray-100">Historial de Compras</h2>
+                      {orders.length > 0 && (
+                        <button
+                          onClick={loadOrders}
+                          disabled={ordersLoading}
+                          className="px-4 py-2 bg-lime-600 hover:bg-lime-700 disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
+                        >
+                          {ordersLoading ? 'Cargando...' : 'Actualizar'}
+                        </button>
+                      )}
                     </div>
+                    
+                    {ordersLoading && orders.length === 0 && (
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center animate-pulse">
+                          <svg className="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-300 mb-2">Cargando compras...</h3>
+                        <p className="text-gray-400">
+                          Obteniendo tu historial de compras, por favor espera.
+                        </p>
+                      </div>
+                    )}
+
+                    {ordersError && (
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-red-900/30 rounded-full flex items-center justify-center">
+                          <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-bold text-red-300 mb-2">Error al cargar</h3>
+                        <p className="text-gray-400 mb-6">{ordersError}</p>
+                        <button
+                          onClick={loadOrders}
+                          className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+                        >
+                          Intentar de nuevo
+                        </button>
+                      </div>
+                    )}
+
+                    {!ordersLoading && !ordersError && orders.length === 0 && (
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center">
+                          <svg className="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-300 mb-2">Sin compras aún</h3>
+                        <p className="text-gray-400 mb-6">
+                          Cuando realices tu primera compra, aparecerá aquí tu historial completo.
+                        </p>
+                        <Link 
+                          to="/catalog" 
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-lime-400 to-emerald-500 hover:from-lime-500 hover:to-emerald-600 text-gray-900 font-bold rounded-lg transition-all duration-300"
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                          </svg>
+                          Explorar Catálogo
+                        </Link>
+                      </div>
+                    )}
+
+                    {!ordersLoading && !ordersError && orders.length > 0 && (
+                      <div className="space-y-4">
+                        {orders.map((order) => (
+                          <div key={order.id} className="bg-gray-950/50 border border-gray-600 rounded-lg p-6">
+                            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
+                              <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                  <h3 className="text-lg font-bold text-gray-100">
+                                    Orden #{order.orderNumber}
+                                  </h3>
+                                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)} border ${getStatusColor(order.status).replace('text-', 'border-')}`}>
+                                    {getStatusText(order.status)}
+                                  </span>
+                                </div>
+                                <p className="text-gray-400 text-sm">
+                                  {formatDate(order.createdAt)}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-2xl font-bold text-lime-300">
+                                  {formatCents(order.totalAmount)}
+                                </p>
+                                {order.paymentMethod && (
+                                  <p className="text-gray-400 text-sm capitalize">
+                                    {order.paymentMethod}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Order Items */}
+                            <div className="space-y-3">
+                              {order.items.map((item, index) => (
+                                <div key={index} className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg">
+                                  <div className="w-12 h-12 bg-gradient-to-br from-lime-400 to-emerald-500 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                                      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                                    </svg>
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="text-gray-100 font-medium">{item.name}</h4>
+                                    <p className="text-gray-400 text-sm">
+                                      Cantidad: {item.quantity}
+                                    </p>
+                                  </div>
+                                  <div className="text-right">
+                                    <p className="text-gray-100 font-medium">
+                                      {formatCents(item.price * item.quantity)}
+                                    </p>
+                                    {item.quantity > 1 && (
+                                      <p className="text-gray-400 text-sm">
+                                        {formatCents(item.price)} c/u
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Customer Info */}
+                            <div className="mt-4 pt-4 border-t border-gray-600">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                  <span className="text-gray-400">Email:</span>
+                                  <span className="text-gray-300 ml-2">{order.userEmail}</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-400">Nombre:</span>
+                                  <span className="text-gray-300 ml-2">{order.userName}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        
+                        {orders.length >= 50 && (
+                          <div className="text-center py-6">
+                            <p className="text-gray-400 text-sm">
+                              Mostrando las 50 compras más recientes
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -542,7 +785,7 @@ const Account: React.FC = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-400">Compras realizadas</span>
-                      <span className="text-lime-300 font-bold">0</span>
+                      <span className="text-lime-300 font-bold">{orders.length}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-400">Cuenta desde</span>
