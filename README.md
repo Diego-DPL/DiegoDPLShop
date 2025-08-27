@@ -1,6 +1,470 @@
-# DiegoDPLShop
+<div align="center">
 
-Una tienda online de bundles de sonido (kits de producción) creada con Vite + React + TailwindCSS y Stripe, desplegada en Vercel. En este repositorio encontrarás la base de código, instrucciones de configuración y estructura de carpetas para instalar, ejecutar y extender la aplicación.
+# 🎵 DiegoDPL Shop
+
+[![Production Ready](https://img.shields.io/badge/Production-Ready-brightgreen.svg)]()
+[![React](https://img.shields.io/badge/React-19.1.0-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF.svg)](https://vitejs.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase-12.1.0-orange.svg)](https://firebase.google.com/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.8-38B2AC.svg)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+**Professional music e-commerce platform for DJs, producers and music lovers**
+
+*Discover exclusive sample libraries, premium beats, and professional remixes from a platinum-certified producer*
+
+[🚀 Live Demo](https://diegodpl.com) • [📖 Documentation](#-documentation) • [🐛 Report Bug](https://github.com/Diego-DPL/DiegoDPLShop/issues) • [✨ Request Feature](https://github.com/Diego-DPL/DiegoDPLShop/issues)
+
+</div>
+
+---
+
+## 🎯 **About the Project**
+
+**DiegoDPLShop** is a cutting-edge e-commerce platform built for the music industry, specifically designed for selling digital music products like sample libraries, beats, remixes, and exclusive content. Built by **DiegoDPL**, a platinum-certified music producer with over 15 years of experience.
+
+### ✨ **Why DiegoDPLShop?**
+
+- 🏆 **Platinum-Certified Quality** - Backed by real industry success
+- 🎵 **Premium Audio Experience** - Built-in audio previews with professional controls
+- 📱 **Mobile-First Design** - Optimized for all devices and screen sizes
+- 🔒 **Secure & Fast** - Firebase backend with enterprise-grade security
+- 🎨 **Glassmorphism UI** - Modern, beautiful interface with premium aesthetics
+- 📧 **Automated Delivery** - Instant digital downloads via email automation
+
+---
+
+## 🚀 **Key Features**
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎵 **Music Commerce**
+- ✅ **Digital Product Sales** - Sample packs, beats, remixes
+- ✅ **Audio Previews** - Advanced playback controls with seek
+- ✅ **Free Content** - Weekly free downloads for community
+- ✅ **Smart Categorization** - Genre, style, and mood filtering
+- ✅ **Instant Downloads** - Automated email delivery system
+
+### 🔐 **Authentication & Security**
+- ✅ **Firebase Auth** - Google, email/password login
+- ✅ **Role-Based Access** - Admin, artist, customer levels
+- ✅ **Secure Checkout** - Stripe integration ready
+- ✅ **Email Verification** - Mailgun-powered notifications
+- ✅ **Download Protection** - Secure, expiring links
+
+</td>
+<td width="50%">
+
+### 📱 **User Experience**
+- ✅ **Responsive Design** - Perfect on mobile, tablet, desktop
+- ✅ **Dark Theme** - Professional DJ/producer aesthetic
+- ✅ **Advanced Search** - Real-time filtering and search
+- ✅ **Cart Management** - Persistent shopping cart
+- ✅ **Purchase History** - Order tracking and re-downloads
+
+### 🚀 **Technical Excellence**
+- ✅ **TypeScript** - Type-safe development
+- ✅ **React 19** - Latest React features
+- ✅ **Vite Build** - Lightning-fast dev and production builds
+- ✅ **SEO Optimized** - Schema.org, Open Graph, Twitter Cards
+- ✅ **PWA Ready** - Progressive Web App capabilities
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🛠️ **Technology Stack**
+
+<div align="center">
+
+| **Frontend** | **Backend** | **Services** | **Tools** |
+|:---:|:---:|:---:|:---:|
+| ![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=black) | ![Firebase](https://img.shields.io/badge/Firebase-12.1.0-FFCA28?style=for-the-badge&logo=firebase&logoColor=black) | ![Mailgun](https://img.shields.io/badge/Mailgun-Email-D72323?style=for-the-badge&logo=mailgun&logoColor=white) | ![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=for-the-badge&logo=vite&logoColor=white) |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | ![Firestore](https://img.shields.io/badge/Firestore-Database-FF6F00?style=for-the-badge&logo=firebase&logoColor=white) | ![Stripe](https://img.shields.io/badge/Stripe-Ready-635BFF?style=for-the-badge&logo=stripe&logoColor=white) | ![ESLint](https://img.shields.io/badge/ESLint-Code%20Quality-4B32C3?style=for-the-badge&logo=eslint&logoColor=white) |
+| ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.8-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) | ![Storage](https://img.shields.io/badge/Firebase-Storage-FF9800?style=for-the-badge&logo=firebase&logoColor=white) | ![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=for-the-badge&logo=vercel&logoColor=white) | ![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git&logoColor=white) |
+
+</div>
+
+---
+
+## 🎥 **Screenshots & Demo**
+
+<div align="center">
+
+### 🏠 **Home Page**
+![Home Page](public/og-image.png)
+*Hero section showcasing DiegoDPL's platinum-certified achievements*
+
+### 🎵 **Music Catalog**
+*Professional music browser with audio previews and advanced filtering*
+
+### 🛒 **Shopping Experience**
+*Seamless cart management and checkout process*
+
+</div>
+
+---
+
+## ⚡ **Quick Start**
+
+### 📋 **Prerequisites**
+
+- **Node.js** 18.0.0 or higher
+- **npm** 8.0.0 or higher
+- **Git**
+- **Firebase Project** (free tier available)
+- **Mailgun Account** (free tier: 5,000 emails/month)
+
+### 🚀 **Installation**
+
+```bash
+# Clone the repository
+git clone https://github.com/Diego-DPL/DiegoDPLShop.git
+
+# Navigate to project directory
+cd DiegoDPLShop
+
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env
+
+# Configure your environment variables (see Configuration section)
+nano .env
+
+# Start development server
+npm run dev
+```
+
+**🎉 Your app will be running at `http://localhost:5173`**
+
+### ⚙️ **Configuration**
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+
+# Mailgun Configuration
+VITE_MAILGUN_API_KEY=key-your_mailgun_api_key
+VITE_MAILGUN_DOMAIN=your_mailgun_domain
+VITE_FROM_EMAIL=noreply@your_domain.com
+
+# Stripe Configuration (Optional)
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
+```
+
+<details>
+<summary>📖 <strong>Detailed Configuration Guide</strong></summary>
+
+### Firebase Setup
+1. Create a new project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Authentication, Firestore, and Storage
+3. Copy your config keys to `.env`
+
+### Mailgun Setup  
+1. Sign up at [Mailgun](https://www.mailgun.com/) (free tier available)
+2. Verify your domain or use sandbox domain
+3. Get your API key and domain from dashboard
+
+### Stripe Setup (Optional)
+1. Create account at [Stripe](https://stripe.com/)
+2. Get your publishable key from dashboard
+3. Configure webhooks for payment processing
+
+</details>
+
+---
+
+## 📱 **Available Scripts**
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | 🔥 Start development server with hot reload |
+| `npm run build` | 📦 Build production-ready application |
+| `npm run preview` | 👁️ Preview production build locally |
+| `npm run lint` | 🔍 Run ESLint for code quality |
+
+---
+
+## 🏗️ **Project Structure**
+
+```
+📦 DiegoDPLShop/
+├── 📁 public/                    # Static assets
+│   ├── 🖼️ favicon.ico           # Site favicon  
+│   ├── 🖼️ og-image.png          # Social media preview
+│   ├── 📄 robots.txt            # SEO crawler directives
+│   ├── 🗺️ sitemap.xml           # SEO sitemap
+│   └── 📱 site.webmanifest      # PWA configuration
+├── 📁 src/
+│   ├── 📁 components/           # Reusable UI components
+│   │   ├── 🔔 Notification.tsx  # Toast notifications
+│   │   └── 📁 layout/           # Layout components
+│   ├── 📁 context/              # React Context providers
+│   │   ├── 🔐 AuthContext.tsx   # Authentication state
+│   │   └── 🛒 CartContext.tsx   # Shopping cart state
+│   ├── 📁 hooks/                # Custom React hooks
+│   │   └── ⬇️ useSecureDownload.ts # Secure file downloads
+│   ├── 📁 lib/                  # External library configurations
+│   │   └── 🔥 firebase.ts       # Firebase configuration
+│   ├── 📁 pages/                # Application pages/routes
+│   │   ├── 🏠 Home.tsx          # Landing page
+│   │   ├── 🎵 Catalog.tsx       # Music catalog browser
+│   │   ├── 🛒 Cart.tsx          # Shopping cart
+│   │   ├── 💳 Checkout.tsx      # Purchase flow
+│   │   ├── 👤 Account.tsx       # User account
+│   │   ├── ⚙️ Admin.tsx         # Admin panel
+│   │   └── 📄 About.tsx         # About page
+│   ├── 📁 utils/                # Utility functions
+│   │   ├── 📧 email.ts          # Email automation
+│   │   ├── 🛍️ products.ts       # Product management
+│   │   ├── 👥 user.ts           # User utilities
+│   │   └── 📊 orders.ts         # Order processing
+│   ├── 📁 assets/               # Images and media
+│   ├── 🎨 App.css               # Global styles
+│   ├── ⚛️ App.tsx               # Main App component
+│   └── 🏁 main.tsx              # Application entry point
+├── 📄 package.json              # Dependencies and scripts
+├── ⚙️ vite.config.ts            # Vite configuration
+├── 🎨 tailwind.config.js        # TailwindCSS configuration
+├── 📝 tsconfig.json             # TypeScript configuration
+└── 📚 README.md                 # You are here!
+```
+
+---
+
+## 🎵 **Music Industry Features**
+
+### 🎧 **Audio Experience**
+- **Professional Audio Player** - Custom-built with glassmorphism design
+- **Seek Functionality** - Precise audio scrubbing and seeking
+- **Volume Control** - Professional mixing board style controls
+- **Waveform Display** - Visual audio representation (coming soon)
+
+### 🎼 **Product Management**
+- **Sample Libraries** - Organized collections of professional samples
+- **Beat Sales** - Individual beat purchases with stems
+- **Remix Collections** - Exclusive remixes and edits
+- **Free Downloads** - Weekly community content
+
+### 📊 **Analytics & Insights**
+- **Download Tracking** - Monitor popular content
+- **User Analytics** - Understand your audience
+- **Sales Reports** - Track revenue and trends
+- **Email Metrics** - Monitor delivery and engagement
+
+---
+
+## 🔒 **Security & Performance**
+
+### 🛡️ **Security Features**
+- ✅ **Firebase Security Rules** - Database and storage protection
+- ✅ **Authentication Guards** - Route-level protection
+- ✅ **Input Validation** - Client and server-side validation
+- ✅ **Secure Downloads** - Time-limited, authenticated links
+- ✅ **HTTPS Enforcement** - Encrypted data transmission
+
+### ⚡ **Performance Optimizations**
+- ✅ **Code Splitting** - Lazy-loaded routes and components
+- ✅ **Image Optimization** - WebP format with fallbacks
+- ✅ **Caching Strategy** - Smart asset caching
+- ✅ **Bundle Analysis** - Optimized build sizes
+- ✅ **Core Web Vitals** - Google PageSpeed optimized
+
+### 📈 **SEO Excellence**
+- ✅ **Schema.org Markup** - Rich snippets for music products
+- ✅ **Open Graph** - Perfect social media previews
+- ✅ **Twitter Cards** - Enhanced tweet appearances
+- ✅ **Sitemap Generation** - Automatic SEO sitemap
+- ✅ **Robots.txt** - Search engine optimization
+
+---
+
+## 📖 **Documentation**
+
+<details>
+<summary>🔧 <strong>Advanced Configuration</strong></summary>
+
+### Firebase Rules Configuration
+```javascript
+// Firestore Security Rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admin-only access to admin functions
+    match /admin/{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Product catalog - public read, admin write
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // User orders - user can read their own
+    match /orders/{orderId} {
+      allow read: if isOwner() || isAdmin();
+      allow create: if isAuthenticated();
+    }
+  }
+}
+```
+
+### Email Template Customization
+```typescript
+// src/utils/email.ts
+export const createDownloadEmailHTML = (data: EmailData): string => {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: linear-gradient(135deg, #84cc16, #a3e635); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0;">¡Thanks for your purchase!</h1>
+      </div>
+      <!-- Customize your email template here -->
+    </div>
+  `;
+};
+```
+
+</details>
+
+<details>
+<summary>🚀 <strong>Deployment Guide</strong></summary>
+
+### Vercel Deployment
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Deploy automatically on every push to main branch
+
+### Custom Domain Setup
+1. Add your domain in Vercel dashboard
+2. Configure DNS records
+3. Enable SSL certificate
+
+### Production Checklist
+- [ ] Environment variables configured
+- [ ] Firebase rules updated for production
+- [ ] Mailgun domain verified
+- [ ] Stripe webhooks configured
+- [ ] Analytics tracking enabled
+
+</details>
+
+---
+
+## 🤝 **Contributing**
+
+We love contributions! Here's how you can help make DiegoDPLShop even better:
+
+### 🐛 **Bug Reports**
+Found a bug? Please open an issue with:
+- Clear description of the problem
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshots if applicable
+
+### ✨ **Feature Requests**
+Have an idea? We'd love to hear it! Please include:
+- Detailed description of the feature
+- Use case and benefits
+- Any implementation ideas
+
+### 💻 **Code Contributions**
+
+```bash
+# Fork the repository
+# Create a feature branch
+git checkout -b feature/amazing-feature
+
+# Make your changes
+# Commit your changes
+git commit -m 'Add some amazing feature'
+
+# Push to the branch
+git push origin feature/amazing-feature
+
+# Open a Pull Request
+```
+
+### 📋 **Development Guidelines**
+- Follow TypeScript best practices
+- Use semantic commit messages
+- Add tests for new features
+- Update documentation as needed
+- Ensure all builds pass
+
+---
+
+## 📄 **License**
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 **About the Developer**
+
+<div align="center">
+
+### **DiegoDPL** 
+*Platinum-Certified Music Producer & Full-Stack Developer*
+
+🏆 **Disco de Platino** with "La Historia" (Lorena Santos)  
+🎵 **15+ Years** of music industry experience  
+💻 **Full-Stack Developer** with modern web technologies  
+
+[![Website](https://img.shields.io/badge/Website-diegodpl.com-brightgreen.svg)](https://diegodpl.com)
+[![Instagram](https://img.shields.io/badge/Instagram-@DiegoDPL-E4405F.svg)](https://instagram.com/DiegoDPL)
+[![GitHub](https://img.shields.io/badge/GitHub-@Diego--DPL-181717.svg)](https://github.com/Diego-DPL)
+
+*"Bridging the gap between music and technology"*
+
+</div>
+
+---
+
+## 🙏 **Acknowledgments**
+
+- **React Team** - For the amazing framework
+- **Vercel** - For excellent hosting and deployment
+- **Firebase** - For robust backend infrastructure  
+- **TailwindCSS** - For the utility-first CSS framework
+- **Music Community** - For inspiration and feedback
+
+---
+
+## 📞 **Support**
+
+Need help? Have questions? We're here for you!
+
+- 📧 **Email**: [info@diegodpl.com](mailto:info@diegodpl.com)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/Diego-DPL/DiegoDPLShop/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Diego-DPL/DiegoDPLShop/discussions)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [DiegoDPL](https://github.com/Diego-DPL)**
+
+⭐ **Star this repository if you found it helpful!**
+
+[![Stars](https://img.shields.io/github/stars/Diego-DPL/DiegoDPLShop?style=social)](https://github.com/Diego-DPL/DiegoDPLShop/stargazers)
+[![Forks](https://img.shields.io/github/forks/Diego-DPL/DiegoDPLShop?style=social)](https://github.com/Diego-DPL/DiegoDPLShop/network/members)
+
+</div>
 
 ---
 
